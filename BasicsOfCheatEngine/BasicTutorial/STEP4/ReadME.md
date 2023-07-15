@@ -1,0 +1,3 @@
+# The forth step
+
+Now there are 2 values. HP - float and Ammo - double. So scan for float and value of 100 first. There are usually not many floats so it should be findable wia just one or two scans. Add it to table and look for the Ammo. Press new scan and select double. There are even less doubles than floats in games, so it should be pretty easy. Add it to table. Now set them both to 5000 and go next.
