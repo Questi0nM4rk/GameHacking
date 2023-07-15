@@ -4,7 +4,7 @@ Hey this is where im gonna start. The GOAT of all game hacking. **[CHEAT ENGINE]
 
 ## Tutorials
 
-Cheat engine has 2 tutorial.
+Cheat engine has 2 tutorial. Which you can access by clicking *help* and *cheat engine tutorial*.
 
 - Basic tutorial:
     This is where you will learn the total basics of the engine, devided into 9 steps.
