@@ -15,3 +15,6 @@ Cheat engine has 2 tutorial. Which you can access by clicking *help* and *cheat 
 ## Addition
 
 Im gonna try and make everything i can into a downloadable cheat table or script.
+
+## Basic setting for Cheat engine
+

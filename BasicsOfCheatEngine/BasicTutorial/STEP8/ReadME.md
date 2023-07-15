@@ -67,3 +67,15 @@ My final table looks like this:
 01A4C734 => 01A54BD8 + 0 = 01A54BD8<br>
 01A6AE8C => 1A4C720 + 14 = 01A4C734<br>
 "Tutorial-i386.exe"+2566E0 => 1A6AE80 + 0x0C = 01A6AE8C<br>
+
+The last static green address has the apps name as default for the offset.
+
+And this is my cheat table:
+
+![](Screenshot.png)
+
+Now to complete this step. Click on add address manually on the right side of your cheat engine. Paste your final address the one with text to the address box. Click pointer at the bottom and add 4 offsets. Fill the offsets in and add it.
+
+![](Screenshot2.png)
+
+And as you can see the value at the top mathches the current value. Now just change it to 5000 and freeze it. Than go to change poiter in your game and DONE. Go next.
