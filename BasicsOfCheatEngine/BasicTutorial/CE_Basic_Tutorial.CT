@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="45">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>1</ID>
+      <Description>"Auto Assemble script"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Tutorial-i386
+  Version: 
+  Date   : 2023-07-15
+  Author : U�ivatel
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(INJECT,Tutorial-i386.exe,83 AB A4 04 00 00 01) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  add dword ptr [ebx+000004A4],02
+  jmp return
+
+INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 83 AB A4 04 00 00 01
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Tutorial-i386.exe+27B13
+
+Tutorial-i386.exe+27AE8: C7 45 D4 00 00 00 00  - mov [ebp-2C],00000000
+Tutorial-i386.exe+27AEF: B8 01 00 00 00        - mov eax,00000001
+Tutorial-i386.exe+27AF4: 8D 55 DC              - lea edx,[ebp-24]
+Tutorial-i386.exe+27AF7: 8D 4D F4              - lea ecx,[ebp-0C]
+Tutorial-i386.exe+27AFA: E8 E1 5C FE FF        - call Tutorial-i386.exe+D7E0
+Tutorial-i386.exe+27AFF: E8 8C C3 FD FF        - call Tutorial-i386.exe+3E90
+Tutorial-i386.exe+27B04: 50                    - push eax
+Tutorial-i386.exe+27B05: 85 C0                 - test eax,eax
+Tutorial-i386.exe+27B07: 0F 85 37 01 00 00     - jne Tutorial-i386.exe+27C44
+Tutorial-i386.exe+27B0D: 8B B3 A4 04 00 00     - mov esi,[ebx+000004A4]
+// ---------- INJECTING HERE ----------
+Tutorial-i386.exe+27B13: 83 AB A4 04 00 00 01  - sub dword ptr [ebx+000004A4],01
+// ---------- DONE INJECTING  ----------
+Tutorial-i386.exe+27B1A: 8D 45 D4              - lea eax,[ebp-2C]
+Tutorial-i386.exe+27B1D: E8 AE BE FD FF        - call Tutorial-i386.exe+39D0
+Tutorial-i386.exe+27B22: 8B 83 A4 04 00 00     - mov eax,[ebx+000004A4]
+Tutorial-i386.exe+27B28: 68 FF 00 00 00        - push 000000FF
+Tutorial-i386.exe+27B2D: 8D 8D D4 FE FF FF     - lea ecx,[ebp-0000012C]
+Tutorial-i386.exe+27B33: BA FF FF FF FF        - mov edx,FFFFFFFF
+Tutorial-i386.exe+27B38: E8 C3 D1 FD FF        - call Tutorial-i386.exe+4D00
+Tutorial-i386.exe+27B3D: 8D 4D D4              - lea ecx,[ebp-2C]
+Tutorial-i386.exe+27B40: 66 31 D2              - xor dx,dx
+Tutorial-i386.exe+27B43: 8D 85 D4 FE FF FF     - lea eax,[ebp-0000012C]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>11</ID>
+      <Description>"FINALPTR"</Description>
+      <ShowAsSigned>0</ShowAsSigned>
+      <VariableType>4 Bytes</VariableType>
+      <Address>"Tutorial-i386.exe"+2566E0</Address>
+      <Offsets>
+        <Offset>18</Offset>
+        <Offset>0</Offset>
+        <Offset>14</Offset>
+        <Offset>0C</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>16</ID>
+      <Description>"step9 - godmode"</Description>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : Tutorial-i386
+  Version: 
+  Date   : 2023-07-15
+  Author : U�ivatel
+
+  This script does blah blah blah
+}
+
+[ENABLE]
+
+aobscanmodule(INJECT,Tutorial-i386.exe,89 43 04 D9 EE) // should be unique
+alloc(newmem,$1000)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  cmp [ebx+10] 1
+  je x
+  mov [ebx+04],eax
+  fldz 
+  jmp return
+
+x:
+ fldz
+ jmp return
+
+INJECT:
+  jmp newmem
+return:
+registersymbol(INJECT)
+
+[DISABLE]
+
+INJECT:
+  db 89 43 04 D9 EE
+
+unregistersymbol(INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: Tutorial-i386.exe+28E89
+
+Tutorial-i386.exe+28E71: DF E0              - fnstsw ax
+Tutorial-i386.exe+28E73: 9E                 - sahf 
+Tutorial-i386.exe+28E74: 7A 0A              - jp Tutorial-i386.exe+28E80
+Tutorial-i386.exe+28E76: 76 08              - jna Tutorial-i386.exe+28E80
+Tutorial-i386.exe+28E78: 8B 45 CC           - mov eax,[ebp-34]
+Tutorial-i386.exe+28E7B: 89 45 FC           - mov [ebp-04],eax
+Tutorial-i386.exe+28E7E: EB 06              - jmp Tutorial-i386.exe+28E86
+Tutorial-i386.exe+28E80: 8B 45 D0           - mov eax,[ebp-30]
+Tutorial-i386.exe+28E83: 89 45 FC           - mov [ebp-04],eax
+Tutorial-i386.exe+28E86: 8B 45 FC           - mov eax,[ebp-04]
+// ---------- INJECTING HERE ----------
+Tutorial-i386.exe+28E89: 89 43 04           - mov [ebx+04],eax
+// ---------- DONE INJECTING  ----------
+Tutorial-i386.exe+28E8C: D9 EE              - fldz 
+Tutorial-i386.exe+28E8E: D9 43 04           - fld dword ptr [ebx+04]
+Tutorial-i386.exe+28E91: DE D9              - fcompp 
+Tutorial-i386.exe+28E93: DF E0              - fnstsw ax
+Tutorial-i386.exe+28E95: 9E                 - sahf 
+Tutorial-i386.exe+28E96: 7A 12              - jp Tutorial-i386.exe+28EAA
+Tutorial-i386.exe+28E98: 75 10              - jne Tutorial-i386.exe+28EAA
+Tutorial-i386.exe+28E9A: 8B 43 58           - mov eax,[ebx+58]
+Tutorial-i386.exe+28E9D: 8B 15 74 F5 57 00  - mov edx,[Tutorial-i386.exe+17F574]
+Tutorial-i386.exe+28EA3: E8 D8 AB 06 00     - call Tutorial-i386.exe+93A80
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Code :mov [eax],edx</Description>
+      <AddressString>Tutorial-i386.exe+26E02</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>8B</Byte>
+        <Byte>55</Byte>
+        <Byte>F0</Byte>
+      </Before>
+      <Actual>
+        <Byte>89</Byte>
+        <Byte>10</Byte>
+      </Actual>
+      <After>
+        <Byte>8B</Byte>
+        <Byte>45</Byte>
+        <Byte>F8</Byte>
+        <Byte>8B</Byte>
+        <Byte>80</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <Structures StructVersion="2">
+    <Structure Name="unnamed structure" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="Pointer" Bytesize="4" OffsetHex="00000000" DisplayMethod="unsigned integer"/>
+        <Element Offset="4" Vartype="Float" Bytesize="4" OffsetHex="00000004" DisplayMethod="unsigned integer"/>
+        <Element Offset="8" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000008" DisplayMethod="unsigned integer"/>
+        <Element Offset="12" Vartype="4 Bytes" Bytesize="4" OffsetHex="0000000C" DisplayMethod="hexadecimal"/>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="Byte" Bytesize="1" OffsetHex="00000014" DisplayMethod="unsigned integer"/>
+        <Element Offset="21" Vartype="String" Bytesize="5" OffsetHex="00000015" DisplayMethod="unsigned integer"/>
+        <Element Offset="26" Vartype="Byte" Bytesize="1" RLECount="2" OffsetHex="0000001A" DisplayMethod="unsigned integer"/>
+        <Element Offset="28" Vartype="4 Bytes" Bytesize="4" RLECount="14" OffsetHex="0000001C" DisplayMethod="unsigned integer"/>
+        <Element Offset="84" Vartype="Pointer" Bytesize="4" OffsetHex="00000054" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="4" OffsetHex="00000058" Description="Pointer to instance of TLabel" DisplayMethod="unsigned integer"/>
+        <Element Offset="92" Vartype="4 Bytes" Bytesize="4" RLECount="1001" OffsetHex="0000005C" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+    <Structure Name="unnamed structure" AutoFill="0" AutoCreate="1" DefaultHex="0" AutoDestroy="0" DoNotSaveLocal="0" RLECompression="1" AutoCreateStructsize="4096">
+      <Elements>
+        <Element Offset="0" Vartype="Pointer" Bytesize="4" OffsetHex="00000000" DisplayMethod="unsigned integer"/>
+        <Element Offset="4" Vartype="Float" Bytesize="4" OffsetHex="00000004" DisplayMethod="unsigned integer"/>
+        <Element Offset="8" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000008" DisplayMethod="unsigned integer"/>
+        <Element Offset="12" Vartype="Pointer" Bytesize="4" OffsetHex="0000000C" DisplayMethod="unsigned integer"/>
+        <Element Offset="16" Vartype="4 Bytes" Bytesize="4" OffsetHex="00000010" DisplayMethod="unsigned integer"/>
+        <Element Offset="20" Vartype="Byte" Bytesize="1" OffsetHex="00000014" DisplayMethod="unsigned integer"/>
+        <Element Offset="21" Vartype="String" Bytesize="5" OffsetHex="00000015" DisplayMethod="unsigned integer"/>
+        <Element Offset="26" Vartype="Byte" Bytesize="1" RLECount="2" OffsetHex="0000001A" DisplayMethod="unsigned integer"/>
+        <Element Offset="28" Vartype="4 Bytes" Bytesize="4" RLECount="14" OffsetHex="0000001C" DisplayMethod="unsigned integer"/>
+        <Element Offset="84" Vartype="Pointer" Bytesize="4" OffsetHex="00000054" DisplayMethod="unsigned integer"/>
+        <Element Offset="88" Vartype="Pointer" Bytesize="4" OffsetHex="00000058" Description="Pointer to instance of TLabel" DisplayMethod="unsigned integer"/>
+        <Element Offset="92" Vartype="4 Bytes" Bytesize="4" RLECount="1001" OffsetHex="0000005C" DisplayMethod="unsigned integer"/>
+      </Elements>
+    </Structure>
+  </Structures>
+</CheatTable>

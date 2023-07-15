@@ -12,25 +12,23 @@ Cheat engine has 2 tutorial. Which you can access by clicking *help* and *cheat 
 - Game tutorial:
     This is where you will learn how to actually "use" the things in real games. Its gonna be harder that this tutorial game, but it counts. And will be devided into 3 games and one secret.
 
-## Addition
-
-Im gonna try and make everything I can into a downloadable cheat table or script.
-
 ## Basic setting for Cheat engine
 
 So for the setting there are some things I recomend.
 - General Settings
-    - Enable **Show all windows in the taskbar**
+    - Enable **Show all windows in the taskbar**<br>
+    <br>
 
 - Hotkeys
-    - Place some hotkeys to **Next scan increase value** and the others.
+    - Place some hotkeys to **Next scan increase value** and the others.<br><br>
 
 - Extra Custom Types
-    - Enable all
-
+    - Enable all<br>
+    <br>
 - Scan Settings
     - The 'all' type includes - enable all the things, but the custom types
-    - Also change the directory of the temporary scan files, as you should delete them after each usage of Cheat engine
+    - Also change the directory of the temporary scan files, as you should delete them after each usage of Cheat engine<br>
+    <br>
 
 - Debugger Options
     - **use VEH debugger**
