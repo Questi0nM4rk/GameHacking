@@ -65,4 +65,4 @@ code:
 ...
 ```
 
-After you changed it. Click the *File* at the top left and click *Assign to current cheat table* - this will add this script to your cheat table to activate when you want. Now close all the windos. No need to save it, because its saved in out cheat table. After you closed it all. Activate the script by clicking on the box on the left. When you done that, you can proceed to clicking *Hit me*. Go next.
+After you changed it. Click the *File* at the top left and click *Assign to current cheat table* - this will add this script to your cheat table to activate when you want. Now close all the windos. No need to save it, because its saved in out cheat table. After you closed it all. Activate the script by clicking on the box on the left. When you done that, you can proceed to clicking *Hit me*. **Deactivate the script and Go next**.
