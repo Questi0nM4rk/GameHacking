@@ -3,10 +3,6 @@
 
 
 
-Node::Node(int val) : data(val), next(nullptr) {}
-
-SinglyLinkedList::SinglyLinkedList() : head(nullptr) {}
-
 //add node
 Node* SinglyLinkedList::addNode(const int &val){
     uptr<Node> newNode = std::make_unique<Node>(val);                       // allocate new Node
