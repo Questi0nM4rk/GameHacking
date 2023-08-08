@@ -2,8 +2,7 @@
 
 //includes
 
-#include <iostream>
-#include <memory>
+#include "../../basic.h"
 
 //aliases
 template <typename U>
@@ -29,7 +28,7 @@ public:
 
     bool remNode(const int &val);
 
-    Node* insertNode(const int &val, const int &pos);
+    Node* insertNode(const int &pos, const int &val);
 
     void printList();
 };

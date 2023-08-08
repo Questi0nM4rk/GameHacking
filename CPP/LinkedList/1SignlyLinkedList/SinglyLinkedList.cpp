@@ -48,7 +48,7 @@ bool SinglyLinkedList::remNode(const int& val) {
 
 
 //insert node to pos - 0,1,2,3,4,....
-Node* SinglyLinkedList::insertNode(const int& val, const int& pos) {
+Node* SinglyLinkedList::insertNode(const int& pos, const int& val) {
 
     if (pos < 0)                                                                // if the pos isnt in list = fck off
         return NULL;
