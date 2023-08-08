@@ -24,7 +24,7 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
 
 
 Node* SinglyLinkedList::addNodeEnd(const int &val) {
-
+    return nullptr;
 }
 
 
@@ -107,19 +107,13 @@ void SinglyLinkedList::printList() {
 bool SinglyLinkedList::clearList() {
     try{
 
-        uptr<Node> current = std::move(head);
-        uptr<Node> next = nullptr;
-
-        while (current->next) {
-            next = std::move(current->next);
-            current.release();
-            current = std::move(next);
+        while (head) {
+            head = std::move(head->next);
         }
 
         return true;
     }
-    catch(std::exception e){
+    catch(...){
         return false;
     }
-
 }
