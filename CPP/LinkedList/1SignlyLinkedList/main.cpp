@@ -59,7 +59,7 @@ int main() {
                 std::cout << "What value should the node have? " << std::endl;
                 std::cin >> val;
 
-                ret = SLL.insertNode(val, pos);
+                ret = SLL.insertNode(pos, val); 
 
                 if(ret)
                     std::cout << "Node inserted!" << std::endl;
