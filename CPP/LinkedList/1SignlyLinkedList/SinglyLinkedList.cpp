@@ -1,4 +1,3 @@
-//#include "../../basic.h"
 #include "SinglyLinkedList.h"
 
 
@@ -12,19 +11,43 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
         return head.get();
     }
 
+    else if(tail == nullptr) {                                                  // make sure its the second node added because its gonna be the last
+        tail = std::move(newNode);
+        head->next = std::move(tail);
+        return tail.get();
+    }
+
     else {                                                                      // it is not a first node... 
                                                                                 // just to have O(1) we add the new node to the beggining after the head
         newNode->next = std::move(head->next);                                  // make the newNode point to the 1st node in list
                                                                                 
         head->next = std::move(newNode);                                        // make the head point to the newNode
-    }                                                                           // this adds the node to the 1st pos after head
 
-    return head->next.get();                                                    // return the newNode raw ptr
+        return head->next.get();
+    }
 };
 
 
 Node* SinglyLinkedList::addNodeEnd(const int &val) {
-    return nullptr;
+    uptr<Node> newNode = std::make_unique<Node>(val);
+
+    if (head == nullptr) {
+        head = std::move(newNode);
+        return head.get();
+    }
+
+    else if (tail == nullptr) {
+        tail = std::move(newNode);
+        head->next = std::move(tail);
+        return tail.get();
+    }
+
+    else {
+        tail->next = std::move(newNode);
+        tail = std::move(newNode);
+        return tail.get();
+    }
+    
 }
 
 
