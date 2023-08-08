@@ -4,7 +4,7 @@
 
 
 //add node
-Node* SinglyLinkedList::addNode(const int& val) {
+Node* SinglyLinkedList::addNodeStart(const int &val) {
     uptr<Node> newNode = std::make_unique<Node>(val);                           // allocate new Node
                                                                                 
     if (head == nullptr) {                                                      // is it the first Node?
@@ -23,8 +23,13 @@ Node* SinglyLinkedList::addNode(const int& val) {
 };
 
 
+Node* SinglyLinkedList::addNodeEnd(const int &val) {
+
+}
+
+
 //remove node - removes the node with given value
-bool SinglyLinkedList::remNode(const int& val) {
+bool SinglyLinkedList::remNode(const int &val) {
     Node* prev = head.get();                                                    // get first node as the prev
     Node* curr = head->next.get();                                              // get the next node as the curr
 
@@ -48,7 +53,7 @@ bool SinglyLinkedList::remNode(const int& val) {
 
 
 //insert node to pos - 0,1,2,3,4,....
-Node* SinglyLinkedList::insertNode(const int& pos, const int& val) {
+Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
 
     if (pos < 0)                                                                // if the pos isnt in list = fck off
         return NULL;
@@ -96,4 +101,25 @@ void SinglyLinkedList::printList() {
     }
 
     std::cout << std::endl;
+}
+
+
+bool SinglyLinkedList::clearList() {
+    try{
+
+        uptr<Node> current = std::move(head);
+        uptr<Node> next = nullptr;
+
+        while (current->next) {
+            next = std::move(current->next);
+            current.release();
+            current = std::move(next);
+        }
+
+        return true;
+    }
+    catch(std::exception e){
+        return false;
+    }
+
 }

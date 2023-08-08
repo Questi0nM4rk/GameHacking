@@ -19,16 +19,30 @@ struct Node {
 
 class SinglyLinkedList {
 private:
-    std::unique_ptr<Node> head = nullptr;
+    uptr<Node> head = nullptr;
+    uptr<Node> tail = nullptr;
+    int size = 0;
 
 public:
-    SinglyLinkedList() : head(nullptr) {}
+    SinglyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-    Node* addNode(const int &val);
+    Node* addNodeStart(const int &val);
+
+    Node* addNodeEnd(const int &val);
+
+    Node* insertNode(const int &pos, const int &val);
+
+    Node* getNodeIndex(const int &val);
+
+    Node* getNodeVal(const int &pos);
+
+    uptr<Node> popNode();
 
     bool remNode(const int &val);
 
-    Node* insertNode(const int &pos, const int &val);
+    bool clearList();
+
+    int getSize();
 
     void printList();
 };

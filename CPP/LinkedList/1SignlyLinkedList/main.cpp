@@ -13,7 +13,8 @@ int main() {
         std::cout << "2 - Remove node to list, using value" << std::endl;
         std::cout << "3 - Insert node to list, using index from 0" << std::endl;
         std::cout << "4 - Print the list" << std::endl;
-        std::cout << "5 - Exit" << std::endl << std::endl;
+        std::cout << "5 - Clear the list" << std::endl;
+        std::cout << "6 - Exit" << std::endl << std::endl;
         
         int opt;
         std::cin >> opt;
@@ -28,7 +29,7 @@ int main() {
                 std::cout << "What value should the node have? " << std::endl;
                 std::cin >> val;
 
-                ret = SLL.addNode(val);
+                ret = SLL.addNodeStart(val);
 
                 if(ret)
                     std::cout << "Node added!" << std::endl;
@@ -75,6 +76,11 @@ int main() {
             break;
 
             case 5:
+                SLL.clearList();
+                std::cout << "List cleared!" << std::endl;
+            break;
+
+            case 6:
                 std::cout << "Exitted" << std::endl;
                 b = false;
             break;
