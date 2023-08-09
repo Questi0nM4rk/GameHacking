@@ -84,6 +84,31 @@ Node* SinglyLinkedList::getNode(const int &pos) {
 }
 
 
+uptr<Node> SinglyLinkedList::popNode(const int &val) {
+
+}
+
+
+uptr<Node> SinglyLinkedList::popNode(const int &pos) {
+    if (pos < 0)
+        return nullptr;
+
+    Node* curr = head->next.get();
+    int i = -1;
+
+    while (curr) {
+        if (i+1 == pos) {
+            remNode(1);
+            return std::move(curr->next);
+        }    
+        i++;
+    }
+
+    return nullptr;
+
+}
+
+
 int SinglyLinkedList::getSize() {
     return size;
 }

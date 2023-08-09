@@ -26,23 +26,31 @@ private:
 public:
     SinglyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-    Node* addNodeStart(const int &val);
+    Node* addNodeStart(const int &val); //done
 
-    Node* addNodeEnd(const int &val);
+    Node* addNodeEnd(const int &val);   //done
 
-    Node* insertNode(const int &pos, const int &val);
+    Node* insertNode(const int &pos, const int &val);   //done
 
-    Node* getNode(const int &val);
+    Node* getNode(const int &val);  //done
 
-    Node* getNode(const int &pos);
+    Node* getNode(const int &pos);  //done
 
-    uptr<Node> popNode();
+    uptr<Node> popNode(const int &val);
+   
+    uptr<Node> popNode(const int &pos);
 
-    bool remNode(const int &val);
+    uptr<Node> popNode(Node* node);   
 
-    bool clearList();
+    bool remNode(const int &val);   //done
 
-    int getSize();
+    bool remNode(const int &pos);
 
-    void printList();
+    bool remNode(Node* node);
+
+    bool clearList();   //done
+
+    int getSize();  //done
+
+    void printList();   //done
 };
