@@ -12,9 +12,9 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
     }
 
     else if(tail == nullptr) {                                                  // make sure its the second node added because its gonna be the last
-        tail = std::move(newNode);
         head->next = std::move(newNode);
-        return tail.get();
+        tail = head->next.get();
+        return tail;
     }
 
     else {                                                                      // it is not a first node... 
@@ -37,15 +37,15 @@ Node* SinglyLinkedList::addNodeEnd(const int &val) {
     }
 
     else if (tail == nullptr) {
-        tail = std::move(newNode);
-        head->next = std::move(tail);
-        return tail.get();
+        head->next = std::move(newNode);
+        tail = head->next.get();
+        return tail;
     }
 
     else {
         tail->next = std::move(newNode);
-        tail = std::move(newNode);
-        return tail.get();
+        tail = tail->next.get();
+        return tail;
     }
     
 }
