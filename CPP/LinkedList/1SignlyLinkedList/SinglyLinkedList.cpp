@@ -55,12 +55,16 @@ Node* SinglyLinkedList::addNodeEnd(const int &val) {
 
 
 Node* SinglyLinkedList::getNode(const int &val) {
-    Node* curr = head->next.get();
+    if (!head)
+        return nullptr;
+
+    Node* curr = head.get();
 
     while(curr) {
         if (curr->data == val) {
             return curr;
         }
+        curr = curr->next.get();
     }
 
     return nullptr;
@@ -69,7 +73,10 @@ Node* SinglyLinkedList::getNode(const int &val) {
 
 
 Node* SinglyLinkedList::getNode(const int &pos) {
-    Node* curr = head->next.get();
+    if (!head || pos < 0 || pos > size)
+        return nullptr;
+
+    Node* curr = head.get();
     int i = 0;
 
     while (curr) {
@@ -77,6 +84,7 @@ Node* SinglyLinkedList::getNode(const int &pos) {
             return curr;
         }    
         i++;
+        curr = curr->next.get();
     }
 
     return nullptr;
@@ -85,23 +93,51 @@ Node* SinglyLinkedList::getNode(const int &pos) {
 
 
 uptr<Node> SinglyLinkedList::popNode(const int &val) {
+    if (!head)
+        return nullptr;
+
+    uptr<Node> poppedNode;
+
+    if (val == head->data) {
+        poppedNode = std::move(head);
+        head = std::move(poppedNode->next);
+        return std::move(poppedNode);
+    }
+
+    Node* curr = head->next.get();
+    Node* prev = head.get();
+
+
+
 
 }
 
 
 uptr<Node> SinglyLinkedList::popNode(const int &pos) {
-    if (pos < 0)
+    if (!head || pos < 0 || pos > size)
         return nullptr;
 
+    uptr<Node> poppedNode;
+
+    if (pos == 0) {
+        poppedNode = std::move(head);
+        head = std::move(poppedNode->next);
+        return std::move(poppedNode);
+    }
+
     Node* curr = head->next.get();
-    int i = -1;
+    Node* prev = head.get();
+    int i = 1;
 
     while (curr) {
-        if (i+1 == pos) {
-            remNode(1);
-            return std::move(curr->next);
+        if (i == pos) {
+            poppedNode = std::move(prev->next);
+            prev->next = std::move(poppedNode->next);
+            return std::move(poppedNode);
         }    
         i++;
+        prev = curr;
+        curr = curr->next.get();
     }
 
     return nullptr;
@@ -143,7 +179,7 @@ bool SinglyLinkedList::remNode(const int &val) {
 //insert node to pos - 0,1,2,3,4,....
 Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
 
-    if (pos < 0)                                                                // if the pos isnt in list = fck off
+    if (pos < 0 || !head || pos > size)                                         // if the pos isnt in list = fck off
         return NULL;
 
     uptr<Node> newNode = std::make_unique<Node>(val);
