@@ -7,12 +7,14 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
                                                                                 
     if (head == nullptr) {                                                      // is it the first Node?
         head = std::move(newNode);                                              // add the newNode as the head
+        size++;
         return head.get();
     }
 
     else if(tail == nullptr) {                                                  // make sure its the second node added because its gonna be the last
         head->next = std::move(newNode);
         tail = head->next.get();
+        size++;
         return tail;
     }
 
@@ -20,6 +22,7 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
                                                                                 // just to have O(1) we add the new node to the beggining after the head
         newNode->next = std::move(head->next);                                  // make the newNode point to the 1st node in list
         head->next = std::move(newNode);                                        // make the head point to the newNode
+        size++;
         return head->next.get();
     }
 };
@@ -30,21 +33,59 @@ Node* SinglyLinkedList::addNodeEnd(const int &val) {
 
     if (head == nullptr) {
         head = std::move(newNode);
+        size++;
         return head.get();
     }
 
     else if (tail == nullptr) {
         head->next = std::move(newNode);
         tail = head->next.get();
+        size++;
         return tail;
     }
 
     else {
         tail->next = std::move(newNode);
         tail = tail->next.get();
+        size++;
         return tail;
     }
     
+}
+
+
+Node* SinglyLinkedList::getNode(const int &val) {
+    Node* curr = head->next.get();
+
+    while(curr) {
+        if (curr->data == val) {
+            return curr;
+        }
+    }
+
+    return nullptr;
+
+}
+
+
+Node* SinglyLinkedList::getNode(const int &pos) {
+    Node* curr = head->next.get();
+    int i = 0;
+
+    while (curr) {
+        if (i == pos) {
+            return curr;
+        }    
+        i++;
+    }
+
+    return nullptr;
+
+}
+
+
+int SinglyLinkedList::getSize() {
+    return size;
 }
 
 
@@ -55,12 +96,14 @@ bool SinglyLinkedList::remNode(const int &val) {
 
     if (head->data == val) {                                                    // is head the node we wanna remove?
         head = std::move(head->next);                                           // just make the new head the next node
+        size--;
         return true;
     }
 
     while (curr) {
         if (curr->data == val) {                                                // did we find the node?
             prev->next = std::move(curr->next);                                 // remove the curr by changing the next ptr
+            size--;
             return true;
         }
 
@@ -83,6 +126,7 @@ Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
     if (pos == 0) {                                                             // do you want to insert the node as head?
         newNode->next = std::move(head);                                        // newNode next is gonna be the head which makes the newNode the head
         head = std::move(newNode);                                              // tell our class that the new head in the newNode
+        size++;
         return head.get();
     }
 
@@ -94,6 +138,7 @@ Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
         if (i == pos) {                                                         // if we are at the pos change the ptrs
             newNode->next = std::move(prev->next);                              // the newNodes next ptr will be the prev next ptr = curr
             prev->next = std::move(newNode);                                    // the prev next will be the newNode, replacing the curr node in the list
+            size++;
             return prev->next.get();                                            
         }
 
@@ -131,6 +176,7 @@ bool SinglyLinkedList::clearList() {
             head = std::move(head->next);
         }
 
+        size = 0;
         return true;
     }
     catch(...){

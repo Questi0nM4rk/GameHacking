@@ -32,9 +32,9 @@ public:
 
     Node* insertNode(const int &pos, const int &val);
 
-    Node* getNodeIndex(const int &val);
+    Node* getNode(const int &val);
 
-    Node* getNodeVal(const int &pos);
+    Node* getNode(const int &pos);
 
     uptr<Node> popNode();
 
