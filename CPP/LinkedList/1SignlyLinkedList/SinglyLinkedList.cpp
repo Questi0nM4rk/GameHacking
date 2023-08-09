@@ -13,7 +13,7 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
 
     else if(tail == nullptr) {                                                  // make sure its the second node added because its gonna be the last
         tail = std::move(newNode);
-        head->next = std::move(tail);
+        head->next = std::move(newNode);
         return tail.get();
     }
 
