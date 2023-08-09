@@ -1,7 +1,6 @@
 #include "SinglyLinkedList.h"
 
 
-
 //add node
 Node* SinglyLinkedList::addNodeStart(const int &val) {
     uptr<Node> newNode = std::make_unique<Node>(val);                           // allocate new Node
@@ -20,9 +19,7 @@ Node* SinglyLinkedList::addNodeStart(const int &val) {
     else {                                                                      // it is not a first node... 
                                                                                 // just to have O(1) we add the new node to the beggining after the head
         newNode->next = std::move(head->next);                                  // make the newNode point to the 1st node in list
-                                                                                
         head->next = std::move(newNode);                                        // make the head point to the newNode
-
         return head->next.get();
     }
 };
