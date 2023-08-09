@@ -36,17 +36,17 @@ public:
 
     Node* getNode(const int &pos);  //done
 
-    uptr<Node> popNode(const int &val);
+    uptr<Node> popNode(const int &val); //done
    
-    uptr<Node> popNode(const int &pos);
+    uptr<Node> popNode(const int &pos); //done
 
-    uptr<Node> popNode(Node* node);   
+    uptr<Node> popNode(Node* node); //done
 
     bool remNode(const int &val);   //done
 
-    bool remNode(const int &pos);
+    bool remNode(const int &pos);   //done
 
-    bool remNode(Node* node);
+    bool remNode(Node* node);   //done
 
     bool clearList();   //done
 
