@@ -36,11 +36,17 @@ public:
 
     Node* getNode(const int &pos);  //done
 
+    Node* getHead() const;
+
+    Node* getTail() const;
+
     uptr<Node> popNode(const int &val); //done
    
     uptr<Node> popNode(const int &pos); //done
 
     uptr<Node> popNode(Node* node); //done
+
+    std::vector<int> toArray() const;
 
     bool remNode(const int &val);   //done
 
@@ -50,7 +56,17 @@ public:
 
     bool clearList();   //done
 
-    int getSize();  //done
+    bool isEmpty() const;
 
-    void printList();   //done
+    bool swapNodes(const int &val1, const int &val2);
+
+    bool swapNodes(const int &pos1, const int &pos2);
+
+    bool swapNodes(Node* node1, Node* node2);
+
+    bool reverseList();
+    
+    int getSize() const;  //done
+
+    void printList() const;   //done
 };
