@@ -53,7 +53,7 @@ Node* SinglyLinkedList::addNodeEnd(const int &val) {
 }
 
 
-Node* SinglyLinkedList::getNode(const int &val) {
+Node* SinglyLinkedList::getNodeByVal(const int &val) {
     if (!head)
         return nullptr;
 
@@ -72,7 +72,7 @@ Node* SinglyLinkedList::getNode(const int &val) {
 }
 
 
-Node* SinglyLinkedList::getNode(const int &pos) {
+Node* SinglyLinkedList::getNodeByPos(const int &pos) {
     if (!head || pos < 0 || pos > size)
         return nullptr;
 
@@ -93,71 +93,22 @@ Node* SinglyLinkedList::getNode(const int &pos) {
 }
 
 
-uptr<Node> SinglyLinkedList::popNode(const int &val) {
+uptr<Node> SinglyLinkedList::popNodeByVal(const int &val) {
     if (!head)
         return nullptr;
 
-    uptr<Node> poppedNode;
+    Node* node = getNodeByVal(val);
 
-    if (val == head->data) {
-        poppedNode = std::move(head);
-        head = std::move(poppedNode->next);
-        size--;
-        return std::move(poppedNode);
-    }
-
-    Node* curr = head->next.get();
-    Node* prev = head.get();
-
-    while (curr) {
-        if (curr->data == val) {
-            poppedNode = std::move(prev->next);
-            prev->next = std::move(poppedNode->next);
-            size--;
-            return std::move(poppedNode);
-        }
-
-        prev = curr;
-        curr = curr->next.get();
-    }
-    
-
-
+    return popNode(node);
 }
 
 
-uptr<Node> SinglyLinkedList::popNode(const int &pos) {
+uptr<Node> SinglyLinkedList::popNodeByPos(const int &pos) {
     if (!head || pos < 0 || pos > size)
         return nullptr;
 
-    uptr<Node> poppedNode;
-
-    if (pos == 0) {
-        poppedNode = std::move(head);
-        head = std::move(poppedNode->next);
-        size--;
-        return std::move(poppedNode);
-    }
-
-    Node* curr = head->next.get();
-    Node* prev = head.get();
-    int i = 1;
-
-    while (curr) {
-        if (i == pos) {
-            poppedNode = std::move(prev->next);
-            prev->next = std::move(poppedNode->next);
-            size--;
-            return std::move(poppedNode);
-        }
-
-        i++;
-        prev = curr;
-        curr = curr->next.get();
-    }
-
-    return nullptr;
-
+    Node* node = getNodeByPos(pos);
+    return popNode(node);
 }
 
 
@@ -194,13 +145,13 @@ uptr<Node> SinglyLinkedList::popNode(Node* node) {
 }
 
 
-int SinglyLinkedList::getSize() {
+int SinglyLinkedList::getSize() const {
     return size;
 }
 
 
 //remove node - removes the node with given value
-bool SinglyLinkedList::remNode(const int &val) {
+bool SinglyLinkedList::remNodeByVal(const int &val) {
     if (!head)
         return false;
 
@@ -228,28 +179,13 @@ bool SinglyLinkedList::remNode(const int &val) {
 }
 
 
-bool SinglyLinkedList::remNode(const int &pos) {
+bool SinglyLinkedList::remNodeByPos(const int &pos) {
     if (!head || pos < 0 || pos > size)
         return false;
 
-    Node* prev = head.get();
-    Node* curr = head->next.get();
-    int i = 0;
+    Node* node = getNodeByPos(pos);
 
-    while (curr) {
-        if (i == pos) {
-            prev->next = std::move(curr->next);
-            size--;
-            return true;
-        }
-
-        i++;
-        prev = curr;
-        curr = curr->next.get();
-    }
-
-    return false;
-
+    return remNode(node);
 }
 
 
@@ -261,13 +197,16 @@ bool SinglyLinkedList::remNode(Node* node) {
     Node* curr = head->next.get();
 
     if (node == head.get()) {
-        head = std::move(head->next);
+        uptr<Node> next = std::move(head->next);
+        head.release();
+        head = std::move(next);
         size--;
         return true;
     }
 
     while (curr) {
         if (node == curr) {
+            prev->next.release();
             prev->next = std::move(curr->next);
             size--;
             return true;
@@ -317,8 +256,44 @@ Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
 }
 
 
+Node* SinglyLinkedList::getHead() const {
+    return head.get();
+}
+
+
+Node* SinglyLinkedList::getTail() const {
+    return tail;
+}
+
+
+std::vector<int> SinglyLinkedList::toArray() const {
+    std::vector<int> array;
+    
+    if (!head)
+        return array;
+    
+    Node* curr = head.get();
+
+    while (curr) {
+        array.push_back(curr->data);
+        curr = curr->next.get();
+    }
+
+    return array;
+
+}
+
+
+bool SinglyLinkedList::isEmpty() const {
+    if (!head || size == 0)
+        return false;
+    else
+        return true;
+}
+
+
 //print list
-void SinglyLinkedList::printList() {
+void SinglyLinkedList::printList() const {
     Node* current = head.get();
 
     while (current) {
@@ -348,4 +323,50 @@ bool SinglyLinkedList::clearList() {
     catch(...){
         return false;
     }
+}
+
+
+void SinglyLinkedList::reverseList() {
+    Node* prev = nullptr;
+    Node* current = head.get();
+    Node* next = nullptr;
+
+    while (current) {
+        next = current->next.get();
+        current->next.release();
+        current->next.reset(prev);
+        prev = current;
+        current = next;
+    }
+
+    head = std::move(uptr<Node>(prev));
+}
+
+
+bool SinglyLinkedList::swapNodesByPos(const int &pos1, const int &pos2) {
+    if (!head || pos1 < 0 || pos1 > size || pos2 < 0 || pos2 > size)
+        return false;
+
+    Node* node1 = getNodeByPos(pos1);
+    Node* node2 = getNodeByPos(pos1);
+
+    if (!node1 || !node2)
+        return false;
+
+    return swapNodes(node1, node2);
+}
+
+
+bool SinglyLinkedList::swapNodesByVal(const int &val1, const int &val2) {
+
+}
+
+
+bool SinglyLinkedList::swapNodes(Node* node1, Node* node2) {
+
+}
+
+
+SinglyLinkedList::~SinglyLinkedList() {
+    clearList();
 }

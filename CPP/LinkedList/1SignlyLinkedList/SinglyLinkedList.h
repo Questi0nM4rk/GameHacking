@@ -32,41 +32,43 @@ public:
 
     Node* insertNode(const int &pos, const int &val);   //done
 
-    Node* getNode(const int &val);  //done
+    Node* getNodeByVal(const int &val);  //done
 
-    Node* getNode(const int &pos);  //done
+    Node* getNodeByPos(const int &pos);  //done
 
-    Node* getHead() const;
+    Node* getHead() const;  //done
 
-    Node* getTail() const;
+    Node* getTail() const;  //done
 
-    uptr<Node> popNode(const int &val); //done
+    uptr<Node> popNodeByVal(const int &val); //done
    
-    uptr<Node> popNode(const int &pos); //done
+    uptr<Node> popNodeByPos(const int &pos); //done
 
     uptr<Node> popNode(Node* node); //done
 
-    std::vector<int> toArray() const;
+    std::vector<int> toArray() const; //done
 
-    bool remNode(const int &val);   //done
+    bool remNodeByVal(const int &val);   //done
 
-    bool remNode(const int &pos);   //done
+    bool remNodeByPos(const int &pos);   //done
 
     bool remNode(Node* node);   //done
 
     bool clearList();   //done
 
-    bool isEmpty() const;
+    bool isEmpty() const;   //done
 
-    bool swapNodes(const int &val1, const int &val2);
+    bool swapNodesByVal(const int &val1, const int &val2);
 
-    bool swapNodes(const int &pos1, const int &pos2);
+    bool swapNodesByPos(const int &pos1, const int &pos2);
 
     bool swapNodes(Node* node1, Node* node2);
 
-    bool reverseList();
-    
     int getSize() const;  //done
 
     void printList() const;   //done
+    
+    void reverseList(); //done
+
+    ~SinglyLinkedList();
 };
