@@ -62,7 +62,7 @@ public:
 
     bool swapNodesByPos(const int &pos1, const int &pos2); //done
 
-    bool swapNodes(Node* node1, Node* node2);
+    bool swapNodes(Node* node1, Node* node2);   //done
 
     int getSize() const;  //done
 
