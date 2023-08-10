@@ -389,20 +389,43 @@ bool SinglyLinkedList::swapNodes(Node* node1, Node* node2) {
         curr2 = curr2->next.get();
     }
 
-    if (!curr1 || !curr2)
+    if (!curr1 || !curr2 || curr1 == curr2)
         return false;
     
     if (curr1 == head.get()) {
-        uptr<Node> next = std::move(curr2->next);
-        curr2->next = std::move(curr1->next);
-        curr1->next = std::move(next);
-        prev2->next = std::move(prev1->next);
-        /*
-            curr2->next = head->next
-            prev2->next = move(head)
-            head = move(curr2)
-         */
+        uptr<Node> next1 = std::move(curr1->next);
+        curr1->next = std::move(curr2->next);
+        curr2->next = std::move(next1);
+
+        prev2->next = std::move(uptr<Node>(curr1));
+        head = std::move(uptr<Node>(curr2));
+
+        return true;
     }
+
+    else if (curr2 == head.get()) {
+        uptr<Node> next2 = std::move(curr2->next);
+        curr2->next = std::move(curr1->next);
+        curr1->next = std::move(next2);
+
+        prev1->next = std::move(uptr<Node>(curr2));
+        head = std::move(uptr<Node>(curr1));
+
+        return true;
+    }
+
+    else {
+        uptr<Node> next2 = std::move(curr2->next);
+        curr2->next = std::move(curr1->next);
+        curr1->next = std::move(next2);
+
+        prev1->next = std::move(uptr<Node>(curr2));
+        prev2->next = std::move(uptr<Node>(curr1));
+        
+        return true;
+    }
+
+    return false;
 
 }
 
