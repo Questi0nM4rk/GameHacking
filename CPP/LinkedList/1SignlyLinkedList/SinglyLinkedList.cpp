@@ -358,11 +358,51 @@ bool SinglyLinkedList::swapNodesByPos(const int &pos1, const int &pos2) {
 
 
 bool SinglyLinkedList::swapNodesByVal(const int &val1, const int &val2) {
+    if (!head)
+        return false;
 
+    Node* node2 = getNodeByVal(val1);
+    Node* node1 = getNodeByVal(val1);
+
+    if (!node1 || !node2)
+        return false;
+
+    return swapNodes(node1, node2);
 }
 
 
 bool SinglyLinkedList::swapNodes(Node* node1, Node* node2) {
+    if (!head || !node1 || !node2)
+        return false;
+
+    Node* prev1 = nullptr;
+    Node* curr1 = head.get();
+    while (curr1 && curr1 != node1) {
+        prev1 = curr1;
+        curr1 = curr1->next.get();
+    }
+
+    Node* prev2 = nullptr;
+    Node* curr2 = head.get();
+    while (curr2 && curr2 != node2) {
+        prev2 = curr2;
+        curr2 = curr2->next.get();
+    }
+
+    if (!curr1 || !curr2)
+        return false;
+    
+    if (curr1 == head.get()) {
+        uptr<Node> next = std::move(curr2->next);
+        curr2->next = std::move(curr1->next);
+        curr1->next = std::move(next);
+        prev2->next = std::move(prev1->next);
+        /*
+            curr2->next = head->next
+            prev2->next = move(head)
+            head = move(curr2)
+         */
+    }
 
 }
 

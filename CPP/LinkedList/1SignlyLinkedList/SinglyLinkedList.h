@@ -58,9 +58,9 @@ public:
 
     bool isEmpty() const;   //done
 
-    bool swapNodesByVal(const int &val1, const int &val2);
+    bool swapNodesByVal(const int &val1, const int &val2); //done
 
-    bool swapNodesByPos(const int &pos1, const int &pos2);
+    bool swapNodesByPos(const int &pos1, const int &pos2); //done
 
     bool swapNodes(Node* node1, Node* node2);
 
@@ -70,5 +70,5 @@ public:
     
     void reverseList(); //done
 
-    ~SinglyLinkedList();
+    ~SinglyLinkedList();    //done
 };

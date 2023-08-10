@@ -43,7 +43,7 @@ int main() {
                 std::cout << "What value does the node have? " << std::endl;
                 std::cin >> val;
 
-                ret1 = SLL.remNode(val);
+                ret1 = SLL.remNodeByVal(val);
 
                 if(ret1)
                     std::cout << "Node removed!" << std::endl;
