@@ -121,6 +121,10 @@ uptr<Node> SinglyLinkedList::popNode(Node* node) {
     if (node == head.get()) {
         poppedNode = std::move(head);
         head = std::move(poppedNode->next);
+
+        if (!head)
+            tail = nullptr;
+
         size--;
         return std::move(poppedNode);
     }
@@ -132,6 +136,11 @@ uptr<Node> SinglyLinkedList::popNode(Node* node) {
         if (curr == node) {
             poppedNode = std::move(prev->next);
             prev->next = std::move(poppedNode->next);
+
+            if (node == tail) {
+                tail = prev;
+            }
+
             size--;
             return std::move(poppedNode);
         }
@@ -155,27 +164,9 @@ bool SinglyLinkedList::remNodeByVal(const int &val) {
     if (!head)
         return false;
 
-    Node* prev = head.get();                                                    // get first node as the prev
-    Node* curr = head->next.get();                                              // get the next node as the curr
+    Node* node = getNodeByVal(val);
 
-    if (head->data == val) {                                                    // is head the node we wanna remove?
-        head = std::move(head->next);                                           // just make the new head the next node
-        size--;
-        return true;
-    }
-
-    while (curr) {
-        if (curr->data == val) {                                                // did we find the node?
-            prev->next = std::move(curr->next);                                 // remove the curr by changing the next ptr
-            size--;
-            return true;
-        }
-
-        prev = curr;
-        curr = curr->next.get();
-    }
-
-    return false;
+    return remNode(node);
 }
 
 
@@ -209,6 +200,11 @@ bool SinglyLinkedList::remNode(Node* node) {
             prev->next.release();
             prev->next = std::move(curr->next);
             size--;
+
+            if (curr == tail) {
+                tail = prev;
+            }
+
             return true;
         }
 
@@ -223,7 +219,7 @@ bool SinglyLinkedList::remNode(Node* node) {
 //insert node to pos - 0,1,2,3,4,....
 Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
 
-    if (pos < 0 || !head || pos > size)                                         // if the pos isnt in list = fck off
+    if (pos < 0 || !head || pos > size-1)                                       // if the pos isnt in list = fck off
         return nullptr;
 
     uptr<Node> newNode = std::make_unique<Node>(val);
@@ -244,6 +240,7 @@ Node* SinglyLinkedList::insertNode(const int &pos, const int &val) {
             newNode->next = std::move(prev->next);                              // the newNodes next ptr will be the prev next ptr = curr
             prev->next = std::move(newNode);                                    // the prev next will be the newNode, replacing the curr node in the list
             size++;
+
             return prev->next.get();                                            
         }
 
@@ -317,6 +314,7 @@ bool SinglyLinkedList::clearList() {
             head = std::move(head->next);
         }
 
+        tail = nullptr;
         size = 0;
         return true;
     }
@@ -331,10 +329,12 @@ void SinglyLinkedList::reverseList() {
     Node* current = head.get();
     Node* next = nullptr;
 
+    tail = head.get();
+
     while (current) {
         next = current->next.get();
-        current->next.release();
-        current->next.reset(prev);
+        current->next = std::move(uptr<Node>(prev));
+
         prev = current;
         current = next;
     }
@@ -392,6 +392,14 @@ bool SinglyLinkedList::swapNodes(Node* node1, Node* node2) {
     if (!curr1 || !curr2 || curr1 == curr2)
         return false;
     
+    if (curr1 == tail) {
+        tail = curr2;
+    }   
+    
+    else if (curr2 == tail) {
+        tail = curr1;
+    }
+
     if (curr1 == head.get()) {
         uptr<Node> next1 = std::move(curr1->next);
         curr1->next = std::move(curr2->next);
