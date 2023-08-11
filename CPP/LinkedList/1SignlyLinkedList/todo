@@ -1,5 +1,6 @@
 # TODO
 
 - check chatGPT for the other functions - done
-- dont forget bout tail not swapping when the last node(tail) is removed as tail is only the ptr that points to the last node
-- check for memory leaks in remNode and others
+- dont forget bout tail not swapping when the last node(tail) is removed as tail is only the ptr that points to the last node - done
+- check for memory leaks in remNode and others - done
+- remNode options and popNode options
