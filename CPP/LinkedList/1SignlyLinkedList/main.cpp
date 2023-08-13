@@ -5,7 +5,9 @@ int main() {
 
     bool isRunning = true;
     SinglyLinkedList SLL;
+    
     std::vector<int> array;
+    uptr<Node> poppedNode;
 
     while(isRunning){
 
@@ -66,11 +68,35 @@ int main() {
 
             case 3: // Remove node
                 
+                print("You wanna use v(value) / p(position) / n(node ptr)");
+                std::cin >> pickOpt;
 
-                std::cout << "What value does the node have? " << std::endl;
-                std::cin >> val;
+                if (pickOpt == 'v') {
 
-                bRet = SLL.remNodeByVal(val);
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> val;
+
+                    bRet = SLL.remNodeByVal(val);
+                }
+
+                else if (pickOpt == 'p') {
+
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> pos;
+
+                    bRet = SLL.remNodeByPos(pos);
+                }
+
+                else if (pickOpt == 'n') {
+                    
+                    if (holdPtr)
+                        bRet = SLL.remNode(holdPtr);
+                    
+                    else {
+                        print("You have no node ptr, use getNode!");
+                    }
+                }
+
 
                 if(bRet)
                     std::cout << "Node removed!" << std::endl;
@@ -98,7 +124,41 @@ int main() {
             break;
             
             case 5: // Pop node
-                
+                print("You wanna use v(value) / p(position) / n(node ptr)");
+                std::cin >> pickOpt;
+
+                if (pickOpt == 'v') {
+
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> val;
+
+                    poppedNode = SLL.popNodeByVal(val);
+                }
+
+                else if (pickOpt == 'p') {
+
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> pos;
+
+                    poppedNode = SLL.popNodeByPos(pos);
+                }
+
+                else if (pickOpt == 'n') {
+                    
+                    if (holdPtr)
+                        poppedNode = SLL.popNode(holdPtr);
+                    
+                    else {
+                        print("You have no node ptr, use getNode!");
+                    }
+                }
+
+
+                if(bRet)
+                    std::cout << "Node popped and saved to poppedNode!" << std::endl;
+
+                else
+                    std::cout << "Failed!" << std::endl;
             break;
 
             case 6: // Swap nodes
