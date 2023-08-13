@@ -5,7 +5,7 @@ int main() {
 
     bool isRunning = true;
     SinglyLinkedList SLL;
-    
+
     std::vector<int> array;
     uptr<Node> poppedNode;
 
@@ -25,7 +25,9 @@ int main() {
         std::cout << "11 - Reverse the list" << std::endl;
         std::cout << "12 - Print the list" << std::endl;
         std::cout << "13 - Clear the list" << std::endl;
-        std::cout << "14 - Exit" << std::endl << std::endl;
+        std::cout << "14 - Get head of the list" << std::endl;
+        std::cout << "15 - Get tail of the list" << std::endl;
+        std::cout << "13 - Exit" << std::endl << std::endl;
         
         int opt;
         std::cin >> opt;
@@ -52,6 +54,7 @@ int main() {
 
             break;
             
+
             case 2: // Add node end
                 std::cout << "What value should the node have? " << std::endl;
                 std::cin >> val;
@@ -65,6 +68,7 @@ int main() {
                     std::cout << "Failed!" << std::endl;
 
             break;
+
 
             case 3: // Remove node
                 
@@ -106,6 +110,7 @@ int main() {
 
             break;
 
+
             case 4: // Insert node
                 std::cout << "Where to insert the node? index starting at 0: " << std::endl;
                 std::cin >> pos;
@@ -123,6 +128,7 @@ int main() {
 
             break;
             
+
             case 5: // Pop node
                 print("You wanna use v(value) / p(position) / n(node ptr)");
                 std::cin >> pickOpt;
@@ -161,21 +167,48 @@ int main() {
                     std::cout << "Failed!" << std::endl;
             break;
 
+
             case 6: // Swap nodes
                 SLL.clearList();
                 std::cout << "List cleared!" << std::endl;
 
             break;
 
+
             case 7: // Get node ptr
-                
+                print("You wanna use v(value) / p(position)");
+                std::cin >> pickOpt;
+
+                if (pickOpt == 'v') {
+
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> val;
+
+                    holdPtr = SLL.getNodeByVal(val);
+                }
+
+                else if (pickOpt == 'p') {
+
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> pos;
+
+                    holdPtr = SLL.getNodeByPos(pos);
+                }
+
+                if (holdPtr) 
+                    print("Node recived! And saved to holdNode.");
+
+                else
+                    print("Failed!");
+
             break;
             
+
             case 8: // Convert to array
                 array = SLL.toArray();
 
                 if (!array.empty())
-                    std::cout << "Converted!" << std::endl;
+                    std::cout << "Converted! And saved to array." << std::endl;
 
                 else
                     std::cout << "Failed!" << std::endl;
@@ -228,7 +261,31 @@ int main() {
                 
             break;
             
-            case 14: // Exit
+
+            case 14: // getHead
+                holdPtr = SLL.getHead();
+
+                if (holdPtr)
+                    print("Head recived! And saved to holdPtr.");
+                
+                else
+                    print("Failed!");
+
+            break;
+
+
+            case 15: // getTail
+                holdPtr = SLL.getHead();
+
+                if (holdPtr)
+                    print("Tail recived! And saved to holdPtr.");
+                
+                else
+                    print("Failed!");
+            break;
+
+
+            case 16: // Exit
                 std::cout << "Exitted" << std::endl;
                 isRunning = false;
 
