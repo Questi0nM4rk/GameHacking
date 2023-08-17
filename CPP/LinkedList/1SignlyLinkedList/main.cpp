@@ -160,7 +160,7 @@ int main() {
                 }
 
 
-                if(bRet)
+                if(poppedNode)
                     std::cout << "Node popped and saved to poppedNode!" << std::endl;
 
                 else
