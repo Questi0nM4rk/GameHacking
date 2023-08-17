@@ -72,7 +72,7 @@ int main() {
 
             case 3: // Remove node
                 
-                print("You wanna use v(value) / p(position) / n(node ptr)");
+                std::cout << "You wanna use v(value) / p(position) / n(node ptr)" << std::endl;
                 std::cin >> pickOpt;
 
                 if (pickOpt == 'v') {
@@ -97,7 +97,7 @@ int main() {
                         bRet = SLL.remNode(holdPtr);
                     
                     else {
-                        print("You have no node ptr, use getNode!");
+                        std::cout << "You have no node ptr, use getNode!" << std::endl;
                     }
                 }
 
@@ -130,7 +130,7 @@ int main() {
             
 
             case 5: // Pop node
-                print("You wanna use v(value) / p(position) / n(node ptr)");
+                std::cout << "You wanna use v(value) / p(position) / n(node ptr)" << std::endl;
                 std::cin >> pickOpt;
 
                 if (pickOpt == 'v') {
@@ -155,7 +155,7 @@ int main() {
                         poppedNode = SLL.popNode(holdPtr);
                     
                     else {
-                        print("You have no node ptr, use getNode!");
+                        std::cout << "You have no node ptr, use getNode!" << std::endl;
                     }
                 }
 
@@ -176,7 +176,7 @@ int main() {
 
 
             case 7: // Get node ptr
-                print("You wanna use v(value) / p(position)");
+                std::cout << "You wanna use v(value) / p(position)" << std::endl;
                 std::cin >> pickOpt;
 
                 if (pickOpt == 'v') {
@@ -196,10 +196,10 @@ int main() {
                 }
 
                 if (holdPtr) 
-                    print("Node recived! And saved to holdNode.");
+                    std::cout << "Node recived! And saved to holdNode." << std::endl;
 
                 else
-                    print("Failed!");
+                    std::cout << "Failed!" << std::endl;
 
             break;
             
@@ -231,7 +231,7 @@ int main() {
                     std::cout << "List is empty!" << std::endl;
                 
                 else 
-                    std::cout << "Failed!";
+                    std::cout << "Failed!" << std::endl;
 
             break;
             
@@ -257,7 +257,7 @@ int main() {
                     std::cout << "List cleared!" << std::endl;
 
                 else 
-                    std::cout << "Failed!";
+                    std::cout << "Failed!" << std::endl;
                 
             break;
             
@@ -266,10 +266,10 @@ int main() {
                 holdPtr = SLL.getHead();
 
                 if (holdPtr)
-                    print("Head recived! And saved to holdPtr.");
+                    std::cout << "Head recived! And saved to holdPtr." << std::endl;
                 
                 else
-                    print("Failed!");
+                    std::cout << "Failed!" << std::endl;
 
             break;
 
@@ -278,10 +278,10 @@ int main() {
                 holdPtr = SLL.getHead();
 
                 if (holdPtr)
-                    print("Tail recived! And saved to holdPtr.");
+                    std::cout << "Tail recived! And saved to holdPtr." << std::endl;
                 
                 else
-                    print("Failed!");
+                    std::cout << "Failed!" << std::endl;
             break;
 
 
