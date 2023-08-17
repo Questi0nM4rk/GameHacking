@@ -27,7 +27,7 @@ int main() {
         std::cout << "13 - Clear the list" << std::endl;
         std::cout << "14 - Get head of the list" << std::endl;
         std::cout << "15 - Get tail of the list" << std::endl;
-        std::cout << "13 - Exit" << std::endl << std::endl;
+        std::cout << "16 - Exit" << std::endl << std::endl;
         
         int opt;
         std::cin >> opt;
@@ -85,7 +85,7 @@ int main() {
 
                 else if (pickOpt == 'p') {
 
-                    std::cout << "What value does the node have? " << std::endl;
+                    std::cout << "What position does the node have? From 0" << std::endl;
                     std::cin >> pos;
 
                     bRet = SLL.remNodeByPos(pos);
@@ -143,7 +143,7 @@ int main() {
 
                 else if (pickOpt == 'p') {
 
-                    std::cout << "What value does the node have? " << std::endl;
+                    std::cout << "What position does the node have? From 0" << std::endl;
                     std::cin >> pos;
 
                     poppedNode = SLL.popNodeByPos(pos);
