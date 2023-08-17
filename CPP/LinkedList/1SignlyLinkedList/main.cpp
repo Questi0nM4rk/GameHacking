@@ -169,8 +169,41 @@ int main() {
 
 
             case 6: // Swap nodes
-                SLL.clearList();
-                std::cout << "List cleared!" << std::endl;
+                std::cout << "You wanna use v(value) / p(position) / n(node ptr)" << std::endl;
+                std::cin >> pickOpt;
+
+                if (pickOpt == 'v') {
+
+                    std::cout << "What value does the node have? " << std::endl;
+                    std::cin >> val;
+
+                    bRet = SLL.remNodeByVal(val);
+                }
+
+                else if (pickOpt == 'p') {
+
+                    std::cout << "What position does the node have? From 0" << std::endl;
+                    std::cin >> pos;
+
+                    bRet = SLL.remNodeByPos(pos);
+                }
+
+                else if (pickOpt == 'n') {
+                    
+                    if (holdPtr)
+                        bRet = SLL.remNode(holdPtr);
+                    
+                    else {
+                        std::cout << "You have no node ptr, use getNode!" << std::endl;
+                    }
+                }
+
+
+                if(bRet)
+                    std::cout << "Node removed!" << std::endl;
+
+                else
+                    std::cout << "Failed!" << std::endl;
 
             break;
 
