@@ -35,7 +35,7 @@ int main() {
         switch (opt)
         {
             char pickOpt;
-            int val, pos, size;
+            int val, pos, size, val2, pos2;
             Node* nodePtr;
             Node* holdPtr;
             bool bRet;
@@ -169,35 +169,30 @@ int main() {
 
 
             case 6: // Swap nodes
-                std::cout << "You wanna use v(value) / p(position) / n(node ptr)" << std::endl;
+                std::cout << "You wanna use v(value) / p(position) " << std::endl;
                 std::cin >> pickOpt;
 
                 if (pickOpt == 'v') {
 
-                    std::cout << "What value does the node have? " << std::endl;
+                    std::cout << "What value does the node1 have? " << std::endl;
                     std::cin >> val;
+                    
+                    std::cout << "What value does the node2 have? " << std::endl;
+                    std::cin >> val2;
 
-                    bRet = SLL.remNodeByVal(val);
+                    bRet = SLL.swapNodesByVal(val, val2);
                 }
 
                 else if (pickOpt == 'p') {
 
-                    std::cout << "What position does the node have? From 0" << std::endl;
+                    std::cout << "What value does the node1 have? " << std::endl;
                     std::cin >> pos;
-
-                    bRet = SLL.remNodeByPos(pos);
-                }
-
-                else if (pickOpt == 'n') {
                     
-                    if (holdPtr)
-                        bRet = SLL.remNode(holdPtr);
-                    
-                    else {
-                        std::cout << "You have no node ptr, use getNode!" << std::endl;
-                    }
-                }
+                    std::cout << "What value does the node2 have? " << std::endl;
+                    std::cin >> pos2;
 
+                    bRet = SLL.swapNodesByPos(pos, pos2);
+                }
 
                 if(bRet)
                     std::cout << "Node removed!" << std::endl;
