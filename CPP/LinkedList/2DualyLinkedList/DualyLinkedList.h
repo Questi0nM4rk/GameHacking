@@ -14,8 +14,8 @@ using uptr = std::unique_ptr<U>;
 struct Node
 {
     int data;
-    uptr<Node> next;
-    uptr<Node> prev;
+    Node* next;
+    Node* prev;
 
     Node(int val) : data(val), next(nullptr), prev(nullptr) {}
 };
