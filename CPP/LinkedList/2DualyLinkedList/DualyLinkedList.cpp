@@ -55,7 +55,7 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
 }
 
 Node* DualyLinkedList::insertNode(const int &pos, const int &val) {
-
+    
 }
 
 Node* DualyLinkedList::getNodeByVal(const int &val) {
