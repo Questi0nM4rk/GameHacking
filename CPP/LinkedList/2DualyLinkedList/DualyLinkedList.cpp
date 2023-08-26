@@ -54,9 +54,11 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
     }
 }
 
+
 Node* DualyLinkedList::insertNode(const int &pos, const int &val) {
     
 }
+
 
 Node* DualyLinkedList::getNodeByVal(const int &val) {
     if (head == nullptr) {
@@ -124,6 +126,7 @@ Node* DualyLinkedList::getNodeByPos(const int &pos) {
     return nullptr;
 }
 
+
 Node* DualyLinkedList::getHead() const {
     return head.get();
 }
@@ -131,6 +134,7 @@ Node* DualyLinkedList::getHead() const {
 Node* DualyLinkedList::getTail() const {
     return tail.get();
 }
+
 
 uptr<Node> DualyLinkedList::popNodeByVal(const int &val) {
 
@@ -171,6 +175,7 @@ uptr<Node> DualyLinkedList::popNode(Node* node) {
 
 }
 
+
 std::vector<int> DualyLinkedList::toArray() const {
     std::vector<int> result;
 
@@ -183,6 +188,7 @@ std::vector<int> DualyLinkedList::toArray() const {
     return result;
 
 }
+
 
 bool DualyLinkedList::remNodeByVal(const int &val) {
 
@@ -228,6 +234,7 @@ bool DualyLinkedList::remNode(Node* node) {
 
 }
 
+
 bool DualyLinkedList::clearList() {
     if (head == nullptr) {
         return false;
@@ -256,6 +263,7 @@ bool DualyLinkedList::isEmpty() const {
     }
 }
 
+
 bool DualyLinkedList::swapNodesByVal(const int &val1, const int &val2) {
 
 }
@@ -267,6 +275,7 @@ bool DualyLinkedList::swapNodesByPos(const int &pos1, const int &pos2) {
 bool DualyLinkedList::swapNodes(Node* node1, Node* node2) {
 
 }
+
 
 int DualyLinkedList::getSize() const {
     return size;
@@ -289,6 +298,26 @@ void DualyLinkedList::printList() const {
 }
 
 void DualyLinkedList::reverseList() {
-    
+    if (head == nullptr || head == tail) {
+        return;
+    }
+
+    Node* current = head->next;
+    Node* temp = nullptr;
+
+    uptr<Node> tailTmp = std::move(tail);
+    tail = std::move(head);
+    head = std::move(tailTmp);
+    tailTmp.reset();
+
+    while (current) {
+        temp = current->next;
+        current->next = current->prev;
+        current->prev = temp;
+
+        current = temp;
+
+    }
+
 }
 
