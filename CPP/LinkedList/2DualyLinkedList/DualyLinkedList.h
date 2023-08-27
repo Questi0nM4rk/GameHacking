@@ -24,7 +24,7 @@ class DualyLinkedList
 {
 private:
     uptr<Node> head = nullptr;
-    uptr<Node> tail = nullptr;
+    Node* tail = nullptr;
     int size = 0;
 
 public:

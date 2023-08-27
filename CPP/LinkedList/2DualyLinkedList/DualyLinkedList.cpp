@@ -11,12 +11,12 @@ Node* DualyLinkedList::addNodeStart(const int &val) {
     }
 
     else if(tail == nullptr) {
-        tail = std::move(newNode);
-        head->next = tail.get();
+        tail = newNode.get();
+        head->next = tail;
         tail->prev = head.get();
 
         size++;
-        return tail.get();
+        return tail;
     }
 
     else {
@@ -46,27 +46,34 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
     }
 
     else if (tail == nullptr) {
-        tail = std::move(newNode);
-        head->next = tail.get();
+        tail = newNode.get();
+        head->next = tail;
         tail->prev = head.get();
 
         printList();
 
         size++;
-        return tail.get();
+        return tail;
     }
 
     else {  // this is broken, and mby the other add node is too... idk why ffs
+
+        newNode->prev = tail;
+        tail->next = newNode.get();
+
+        tail = newNode.get();
+
+        /*
         newNode->next = tail.get();
         newNode->prev = tail->prev;
 
         tail->prev->next = newNode.get();
         tail->prev = newNode.get();
-
+        */
         printList();
 
         size++;
-        return tail.get();
+        return tail;
     }
 }
 
@@ -82,7 +89,7 @@ Node* DualyLinkedList::getNodeByVal(const int &val) {
     }
 
     Node* left = head.get();
-    Node* right = tail.get();
+    Node* right = tail;
 
     while (left->next != right && right->prev != left && left != nullptr && right != nullptr) {
         if (left->data == val) {
@@ -109,7 +116,7 @@ Node* DualyLinkedList::getNodeByPos(const int &pos) {
     }
 
     Node* left = head.get();
-    Node* right = tail.get();
+    Node* right = tail;
 
     int leftPos = 0;
     int rightPos = size;
@@ -119,7 +126,7 @@ Node* DualyLinkedList::getNodeByPos(const int &pos) {
     }
 
     else if (pos == size-1) {
-        return tail.get();
+        return tail;
     }
 
     while (left->next != right && right->prev != left && left != nullptr && right != nullptr) {
@@ -148,7 +155,7 @@ Node* DualyLinkedList::getHead() const {
 }
 
 Node* DualyLinkedList::getTail() const {
-    return tail.get();
+    return tail;
 }
 
 
@@ -177,7 +184,7 @@ uptr<Node> DualyLinkedList::popNode(Node* node) {
     if (node->next) {
         node->next->prev = node->prev;
     } else {
-        tail = uptr<Node>(node->prev);
+        tail = node->prev;
     }
     if (node->prev) {
         node->prev->next = node->next;
@@ -236,7 +243,7 @@ bool DualyLinkedList::remNode(Node* node) {
     if (node->next) {
         node->next->prev = node->prev;
     } else {
-        tail = uptr<Node>(node->prev);
+        tail = node->prev;
     }
     if (node->prev) {
         node->prev->next = node->next;
@@ -263,7 +270,7 @@ bool DualyLinkedList::clearList() {
     }
 
     head.reset();
-    tail.reset();
+    tail = nullptr;
 
     size = 0;
 
@@ -314,17 +321,17 @@ void DualyLinkedList::printList() const {
 }
 
 void DualyLinkedList::reverseList() {
-    if (head == nullptr || head == tail) {
+    if (head == nullptr) {
         return;
     }
 
     Node* current = head->next;
     Node* temp = nullptr;
 
-    uptr<Node> tailTmp = std::move(tail);
-    tail = std::move(head);
-    head = std::move(tailTmp);
-    tailTmp.reset();
+    Node* tailTmp = tail;
+    tail = head.get();
+    head = uptr<Node>(tailTmp);
+    tailTmp = nullptr;
 
     while (current) {
         temp = current->next;
