@@ -19,10 +19,14 @@ Node* DualyLinkedList::addNodeStart(const int &val) {
         return tail.get();
     }
 
-    else { 
-        newNode->next = tail.get();
-        tail->prev = newNode.get();
+    else {
+        Node* current = head->next;
+
+        newNode->next = current;
         head->next = newNode.get();
+
+        newNode->prev = head.get();
+
         size++;
         return head->next;
     }
@@ -33,30 +37,42 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
     
     if (head == nullptr) {
         head = std::move(newNode);
+        tail = nullptr;
+
+        printList();
+
         size++;
         return head.get();
     }
 
-    else if(tail == nullptr) {
+    else if (tail == nullptr) {
         tail = std::move(newNode);
         head->next = tail.get();
         tail->prev = head.get();
+
+        printList();
 
         size++;
         return tail.get();
     }
 
-    else { 
-        newNode->prev = tail.get();
-        tail->next = newNode.get();
+    else {
+        newNode->next = tail.get();
+        newNode->prev = tail->prev;
+        
+        tail->prev->next = newNode.get();
+        tail->prev = newNode.get();
+
+        printList();
+
         size++;
-        return head->next;
+        return tail.get();
     }
 }
 
 
 Node* DualyLinkedList::insertNode(const int &pos, const int &val) {
-    
+    return nullptr;
 }
 
 
@@ -265,15 +281,15 @@ bool DualyLinkedList::isEmpty() const {
 
 
 bool DualyLinkedList::swapNodesByVal(const int &val1, const int &val2) {
-
+    return false;
 }
 
 bool DualyLinkedList::swapNodesByPos(const int &pos1, const int &pos2) {
-
+    return false;
 }
 
 bool DualyLinkedList::swapNodes(Node* node1, Node* node2) {
-
+    return false;
 }
 
 
@@ -288,7 +304,7 @@ void DualyLinkedList::printList() const {
         std::cout << current->data;
 
         if (current->next) {
-            std::cout << "<-->";
+            std::cout << " <--> ";
         }
 
         current = current->next;
@@ -321,3 +337,6 @@ void DualyLinkedList::reverseList() {
 
 }
 
+DualyLinkedList::~DualyLinkedList() {
+    clearList();
+}
