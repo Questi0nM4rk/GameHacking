@@ -56,10 +56,10 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
         return tail.get();
     }
 
-    else {
+    else {  // this is broken, and mby the other add node is too... idk why ffs
         newNode->next = tail.get();
         newNode->prev = tail->prev;
-        
+
         tail->prev->next = newNode.get();
         tail->prev = newNode.get();
 
