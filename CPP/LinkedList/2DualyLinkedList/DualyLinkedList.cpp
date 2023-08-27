@@ -47,8 +47,9 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
 
     else if (tail == nullptr) {
         tail = newNode.get();
-        head->next = tail;
+        head->next = newNode.get();
         tail->prev = head.get();
+        tail->next = nullptr;
 
         printList();
 
@@ -56,12 +57,13 @@ Node* DualyLinkedList::addNodeEnd(const int &val) {
         return tail;
     }
 
-    else {  // this is broken, and mby the other add node is too... idk why ffs
+    else {  // ok i found the problem, im too tired to fix it now, but it has to do with raw ptrs transfeting between two files... they point to different places, need to replace next and prev with uptrs
 
-        newNode->prev = tail;
+        //newNode->prev = tail;
+        newNode->next = nullptr;
         tail->next = newNode.get();
-
-        tail = newNode.get();
+        
+        //tail = newNode.get();
 
         /*
         newNode->next = tail.get();
