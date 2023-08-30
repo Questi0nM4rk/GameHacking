@@ -1,8 +1,8 @@
-#include "DualyLinkedList.h"
+#include "DoublyLinkedList.h"
 
 int main() {
     
-    DualyLinkedList DLL;
+    DoublyLinkedList DLL;
 
     for (int i = 20; i > 0; i--) {
         DLL.addNodeEnd(i);

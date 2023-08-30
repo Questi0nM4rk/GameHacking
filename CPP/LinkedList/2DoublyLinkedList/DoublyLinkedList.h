@@ -9,27 +9,30 @@
 template <typename U>
 using uptr = std::unique_ptr<U>;
 
+template <typename S>
+using sptr = std::shared_ptr<S>;
+
 // struct
 
 struct Node
 {
     int data;
-    uptr<Node> next;
-    uptr<Node> prev;
+    sptr<Node> next;
+    sptr<Node> prev;
 
     Node(int val) : data(val), next(nullptr), prev(nullptr) {}
 };
 
-class DualyLinkedList
+class DoublyLinkedList
 {
 private:
-    uptr<Node> head = nullptr;
-    Node* tail = nullptr;
+    sptr<Node> head = nullptr;
+    sptr<Node> tail = nullptr;
     int size = 0;
 
 public:
     
-    DualyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+    DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
     Node* addNodeStart(const int &val); //done C
 
@@ -75,7 +78,7 @@ public:
     
     void reverseList(); //done C
 
-    ~DualyLinkedList();    //done C
+    ~DoublyLinkedList();    //done C
 
 };
 
