@@ -318,6 +318,9 @@ void DoublyLinkedList::reverseList() {
         current->next = current->prev;
         current->prev = temp;
 
+        //rem
+        printList();
+
         current = temp;
     }
 }
