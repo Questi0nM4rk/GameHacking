@@ -6,6 +6,7 @@ Node* DoublyLinkedList::addNodeStart(const int &val) {
     
     if (head == nullptr) {
         head = std::move(newNode);
+
         size++;
         return head.get();
 
@@ -74,6 +75,8 @@ Node* DoublyLinkedList::insertNode(const int &pos, const int &val) {
     newNode->next = std::move(nodePos->next);
     newNode->prev = nodePos;
     nodePos->next = std::move(newNode);
+
+    size++;
 
     return nodePos->next.get();
 }
@@ -265,11 +268,7 @@ bool DoublyLinkedList::clearList() {
 }
 
 bool DoublyLinkedList::isEmpty() const {
-    if (head == nullptr) {
-        return true;
-    } else {
-        return false;
-    }
+    return head == nullptr;
 }
 
 
