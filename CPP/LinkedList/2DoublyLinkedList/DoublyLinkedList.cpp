@@ -2,27 +2,28 @@
 
 
 Node* DoublyLinkedList::addNodeStart(const int &val) {
-    std::shared_ptr<Node> newNode = std::make_shared<Node>(val);
+    uptr<Node> newNode = std::make_unique<Node>(val);
     
     if (head == nullptr) {
-        head = newNode;
+        head = std::move(newNode);
         size++;
         return head.get();
 
     } else if (tail == nullptr) {
-        head->next = newNode;
-        tail = newNode;
-        tail->prev = head;
+        head->next = std::move(newNode);
+        tail = head->next.get();
+        tail->prev = head.get();
+
         size++;
-        return tail.get();
+        return tail;
 
     } else {
-        std::shared_ptr<Node> current = head->next;
+        uptr<Node> tmp = std::move(head->next);
 
-        newNode->next = current;
-        head->next = newNode;
-
-        newNode->prev = head;
+        newNode->prev = head.get();
+        head->next = std::move(newNode);
+        tmp->prev = head->next.get();
+        newNode->next = std::move(tmp);
 
         size++;
         return newNode.get();
@@ -30,21 +31,26 @@ Node* DoublyLinkedList::addNodeStart(const int &val) {
 }
 
 Node* DoublyLinkedList::addNodeEnd(const int &val) {
-    std::shared_ptr<Node> newNode = std::make_shared<Node>(val);
+    uptr<Node> newNode = std::make_unique<Node>(val);
     
     if (head == nullptr) {
-        head = newNode;
+        head = std::move(newNode);
+
         size++;
         return head.get();
 
     } else if (tail == nullptr) {
-        head->next = newNode;
-        tail = newNode;
-        tail->prev = head;
+        head->next = std::move(newNode);
+        tail = head->next.get();
+        tail->prev = head.get();
+
         size++;
-        return tail.get();
+        return tail;
 
     } else {
+        tail->next = std::move(newNode);
+        
+
         tail->next = newNode;
         newNode->prev = tail;
 
@@ -305,23 +311,28 @@ void DoublyLinkedList::reverseList() {
         return;
     }
 
-    std::shared_ptr<Node> current = head->next;
-    std::shared_ptr<Node> temp = nullptr;
+    sptr<Node> current = head->next;
+    sptr<Node> next = nullptr;
 
-    std::shared_ptr<Node> tailTmp = tail;
-    tail = head;
-    head = tailTmp;
-    tailTmp = nullptr;
+    sptr<Node> tp = tail->prev;
+    tail->prev = head->next;
+    head->next = tail->prev;
+
+    sptr<Node> tmpHead = head;
+    head = tail;
+    tail = tmpHead;
 
     while (current) {
-        temp = current->next;
-        current->next = current->prev;
-        current->prev = temp;
+        sptr<Node> tmp = current->prev;
 
-        //rem
+        next = current->next;
+
+        current->prev = current->next;
+        current->next = tmp;
+
+        current = next;
+
         printList();
-
-        current = temp;
     }
 }
 
