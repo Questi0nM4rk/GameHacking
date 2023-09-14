@@ -296,7 +296,7 @@ bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
     node2->next = std::move(tmpN1next);
     node2->prev = tmpN1prev;
 
-    return false;
+    return true;
 }
 
 
