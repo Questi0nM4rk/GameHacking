@@ -19,12 +19,10 @@ Node* DoublyLinkedList::addNodeStart(const int &val) {
         return tail;
 
     } else {
-        uptr<Node> tmp = std::move(head->next);
-
         newNode->prev = head.get();
+        newNode->next = std::move(head->next);
+
         head->next = std::move(newNode);
-        tmp->prev = head->next.get();
-        newNode->next = std::move(tmp);
 
         size++;
         return newNode.get();
@@ -334,7 +332,7 @@ void DoublyLinkedList::reverseList() {
 
     while(current) {
         temp = current->prev;
-        current->prev = current->next.get();
+        current->prev = current->next.get();        // segmentation error... accesing some already dead ptr or unreferenced ptr... look in debug
         current->next = uptr<Node>(temp);
         current = current->prev;
     }
