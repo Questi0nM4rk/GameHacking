@@ -275,11 +275,17 @@ bool DoublyLinkedList::isEmpty() const {
 
 
 bool DoublyLinkedList::swapNodesByVal(const int &val1, const int &val2) {
-    return false;
+    Node* node1 = getNodeByVal(val1);
+    Node* node2 = getNodeByVal(val2);
+
+    return swapNodes(node1, node2);
 }
 
 bool DoublyLinkedList::swapNodesByPos(const int &pos1, const int &pos2) {
-    return false;
+    Node* node1 = getNodeByPos(pos1);
+    Node* node2 = getNodeByPos(pos2);
+
+    return swapNodes(node1, node2);
 }
 
 bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
