@@ -48,13 +48,9 @@ Node* DoublyLinkedList::addNodeEnd(const int &val) {
         return tail;
 
     } else {
-        tail->next = std::move(newNode);
-        
-
-        tail->next = newNode;
         newNode->prev = tail;
-
-        tail = newNode;
+        tail->next = std::move(newNode);
+        tail = tail->next.get();
 
         size++;
         return newNode.get();
@@ -73,9 +69,9 @@ Node* DoublyLinkedList::getNodeByVal(const int &val) {
     }
 
     Node* left = head.get();
-    Node* right = tail.get();
+    Node* right = tail;
 
-    while (left->next.get() != right && right->prev.get() != left && left != nullptr && right != nullptr) {
+    while (left->next.get() != right && right->prev != left && left != nullptr && right != nullptr) {
         if (left->data == val) {
             return left;
         }
@@ -84,7 +80,7 @@ Node* DoublyLinkedList::getNodeByVal(const int &val) {
         }
 
         left = left->next.get();
-        right = right->prev.get();
+        right = right->prev;
     }
 
     if (left == right && left != nullptr && left->data == val) {
@@ -100,7 +96,7 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
     }
 
     Node* left = head.get();
-    Node* right = tail.get();
+    Node* right = tail;
 
     int leftPos = 0;
     int rightPos = size;
@@ -110,10 +106,10 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
     }
 
     else if (pos == size-1) {
-        return tail.get();
+        return tail;
     }
 
-    while (left->next.get() != right && right->prev.get() != left && left != nullptr && right != nullptr) {
+    while (left->next.get() != right && right->prev != left && left != nullptr && right != nullptr) {
         if (leftPos == pos) {
             return left;
         }
@@ -139,7 +135,7 @@ Node* DoublyLinkedList::getHead() const {
 }
 
 Node* DoublyLinkedList::getTail() const {
-    return tail.get();
+    return tail;
 }
 
 
@@ -170,9 +166,9 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
     }
 
     if (node->prev) {
-        node->prev->next = node->next;
+        node->prev->next = std::move(node->next);
     } else {
-        head = node->next;
+        head = std::move(node->next);
     }
 
     size--;
@@ -221,18 +217,7 @@ bool DoublyLinkedList::remNode(Node* node) {
         return false;
     }
 
-    uptr<Node> poppedNode = std::move(uptr<Node>(node));
-
-    if (node->next) {
-        node->next->prev = node->prev;
-    } else {
-        tail = node->prev;
-    }
-    if (node->prev) {
-        node->prev->next = node->next;
-    } else {
-        head = node->next;
-    }
+    popNode(node);
 
     size--;
 
@@ -250,13 +235,13 @@ bool DoublyLinkedList::clearList() {
     
     while (current) {
         Node* nextNode = current->next.get();
-        current->prev.reset(); 
+        current->prev = nullptr; 
         current->next.reset(); 
         current = nextNode;
     }
 
     head.reset();
-    tail.reset();
+    tail = nullptr;
 
     size = 0;
 
@@ -307,33 +292,22 @@ void DoublyLinkedList::printList() const {
 }
 
 void DoublyLinkedList::reverseList() {
-    if (!head) {
+    if (!head && !head->next) {
         return;
     }
 
-    sptr<Node> current = head->next;
-    sptr<Node> next = nullptr;
+    Node* prev = nullptr;
+    Node* current = head.get();
+    Node* next = nullptr;
 
-    sptr<Node> tp = tail->prev;
-    tail->prev = head->next;
-    head->next = tail->prev;
+    uptr<Node> tmpHead = std::move(head);
+    Node* tmpTail = tail;
 
-    sptr<Node> tmpHead = head;
-    head = tail;
-    tail = tmpHead;
+    while(current) {
+        
 
-    while (current) {
-        sptr<Node> tmp = current->prev;
-
-        next = current->next;
-
-        current->prev = current->next;
-        current->next = tmp;
-
-        current = next;
-
-        printList();
     }
+    
 }
 
 DoublyLinkedList::~DoublyLinkedList() {
