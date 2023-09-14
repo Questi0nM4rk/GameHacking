@@ -59,7 +59,23 @@ Node* DoublyLinkedList::addNodeEnd(const int &val) {
 
 
 Node* DoublyLinkedList::insertNode(const int &pos, const int &val) {
-    return nullptr;
+    if (!head) {
+        return nullptr;
+    }
+
+    uptr<Node> newNode = std::make_unique<Node>(val);
+
+    Node* nodePos = getNodeByPos(pos);
+
+    if (!nodePos) {
+        return nullptr;
+    }
+
+    newNode->next = std::move(nodePos->next);
+    newNode->prev = nodePos;
+    nodePos->next = std::move(newNode);
+
+    return nodePos->next.get();
 }
 
 
