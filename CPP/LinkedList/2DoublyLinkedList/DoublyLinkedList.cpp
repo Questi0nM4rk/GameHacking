@@ -296,16 +296,14 @@ void DoublyLinkedList::reverseList() {
         return;
     }
 
-    Node* prev = nullptr;
+    Node* temp = nullptr;
     Node* current = head.get();
-    Node* next = nullptr;
-
-    uptr<Node> tmpHead = std::move(head);
-    Node* tmpTail = tail;
 
     while(current) {
-        
-
+        temp = current->prev;
+        current->prev = current->next.get();
+        current->next = uptr<Node>(temp);
+        current = current->prev;
     }
     
 }
