@@ -238,7 +238,6 @@ bool DoublyLinkedList::remNode(Node* node) {
     size--;
 
     return true;
-
 }
 
 
