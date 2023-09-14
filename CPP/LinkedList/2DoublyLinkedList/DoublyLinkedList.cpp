@@ -283,6 +283,19 @@ bool DoublyLinkedList::swapNodesByPos(const int &pos1, const int &pos2) {
 }
 
 bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
+    if (!head || !node1 || !node2) {
+        return false;
+    }
+
+    uptr<Node> tmpN1next = std::move(node1->next);
+    Node* tmpN1prev = node1->prev;
+
+    node1->next = std::move(node2->next);
+    node1->prev = node2->prev;
+
+    node2->next = std::move(tmpN1next);
+    node2->prev = tmpN1prev;
+
     return false;
 }
 
