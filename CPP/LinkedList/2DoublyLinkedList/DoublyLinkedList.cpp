@@ -25,6 +25,9 @@ Node* DoublyLinkedList::addNodeStart(const int &val) {
         head->next = std::move(newNode);
 
         size++;
+
+        if (size == 3) tail->prev = head->next.get();
+
         return newNode.get();
     }
 }
@@ -322,6 +325,22 @@ void DoublyLinkedList::printList() const {
     std::cout << std::endl;
 }
 
+void DoublyLinkedList::printListBack() const {
+    Node* current = tail;
+
+    while (current) {
+        std::cout << current->data;
+
+        if (current->prev) {
+            std::cout << " <--> ";
+        }
+
+        current = current->prev;
+    }
+
+    std::cout << std::endl;
+}
+
 void DoublyLinkedList::reverseList() {
     if (!head && !head->next) {
         return;
@@ -340,7 +359,6 @@ void DoublyLinkedList::reverseList() {
         rightNodeH = rightNode->prev;
         
         swapNodes(leftNode, rightNode);
-        printList();
 
         leftNode = leftNodeH;
         rightNode = rightNodeH;

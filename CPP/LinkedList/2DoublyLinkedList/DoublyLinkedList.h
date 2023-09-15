@@ -75,6 +75,8 @@ public:
     int getSize() const;  //done
 
     void printList() const;   //done
+
+    void printListBack() const;   //done
     
     void reverseList(); //done C
 
