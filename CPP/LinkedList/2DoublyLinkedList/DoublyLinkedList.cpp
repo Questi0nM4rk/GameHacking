@@ -304,7 +304,7 @@ bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
     unode2->prev = tmpN1prev;
     
     if (unode1->prev != nullptr)
-        node1->prev->next = std::move(unode1);
+        node1->prev->next = std::move(unode1);  // propably this is the last thing that holds the next node, so after replacing it with the new node destroyes the second node
 
     if (unode2->prev != nullptr)
         node2->prev->next = std::move(unode2);
