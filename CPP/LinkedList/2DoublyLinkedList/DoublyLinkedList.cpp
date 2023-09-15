@@ -327,14 +327,26 @@ void DoublyLinkedList::reverseList() {
         return;
     }
 
-    Node* temp = nullptr;
-    Node* current = head.get();
+    int left = 0;
+    int right = size;
 
-    while(current) {
-        temp = current->prev;
-        current->prev = current->next.get();        // segmentation error... accesing some already dead ptr or unreferenced ptr... look in debug
-        current->next = uptr<Node>(temp);
-        current = current->prev;
+    Node* leftNode = head.get();
+    Node* rightNode = tail;
+    Node* rightNodeH = nullptr;
+    Node* leftNodeH = nullptr;
+
+    while(left < size/2 && right > size/2) {
+        leftNodeH = leftNode->next.get();
+        rightNodeH = rightNode->prev;
+        
+        swapNodes(leftNode, rightNode);
+        printList();
+
+        leftNode = leftNodeH;
+        rightNode = rightNodeH;
+
+        left++;
+        right--;
     }
     
 }
