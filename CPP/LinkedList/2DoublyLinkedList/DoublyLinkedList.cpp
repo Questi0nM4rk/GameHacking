@@ -5,28 +5,27 @@ Node* DoublyLinkedList::addNodeStart(const int &val) {
     uptr<Node> newNode = std::make_unique<Node>(val);
     
     if (head == nullptr) {
-        head = std::move(newNode);
+        head = newNode.get();
 
         size++;
-        return head.get();
+        return head;
 
     } else if (tail == nullptr) {
         head->next = std::move(newNode);
         tail = head->next.get();
-        tail->prev = head.get();
+        tail->prev = head;
 
         size++;
         return tail;
 
     } else {
-        newNode->prev = head.get();
+        newNode->prev = head;
         newNode->next = std::move(head->next);
+        newNode->next->prev = newNode.get();
 
         head->next = std::move(newNode);
 
         size++;
-
-        if (size == 3) tail->prev = head->next.get();
 
         return newNode.get();
     }
@@ -36,15 +35,15 @@ Node* DoublyLinkedList::addNodeEnd(const int &val) {
     uptr<Node> newNode = std::make_unique<Node>(val);
     
     if (head == nullptr) {
-        head = std::move(newNode);
+        head = newNode.get();
 
         size++;
-        return head.get();
+        return head;
 
     } else if (tail == nullptr) {
         head->next = std::move(newNode);
         tail = head->next.get();
-        tail->prev = head.get();
+        tail->prev = head;
 
         size++;
         return tail;
@@ -88,7 +87,7 @@ Node* DoublyLinkedList::getNodeByVal(const int &val) {
         return nullptr;
     }
 
-    Node* left = head.get();
+    Node* left = head;
     Node* right = tail;
 
     while (left->next.get() != right && right->prev != left && left != nullptr && right != nullptr) {
@@ -115,14 +114,14 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
         return nullptr;
     }
 
-    Node* left = head.get();
+    Node* left = head;
     Node* right = tail;
 
     int leftPos = 0;
     int rightPos = size;
 
     if (pos == 0) {
-        return head.get();
+        return head;
     }
 
     else if (pos == size-1) {
@@ -151,7 +150,7 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
 
 
 Node* DoublyLinkedList::getHead() const {
-    return head.get();
+    return head;
 }
 
 Node* DoublyLinkedList::getTail() const {
@@ -188,7 +187,7 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
     if (node->prev) {
         node->prev->next = std::move(node->next);
     } else {
-        head = std::move(node->next);
+        head = node->next.get();
     }
 
     size--;
@@ -201,7 +200,7 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
 std::vector<int> DoublyLinkedList::toArray() const {
     std::vector<int> result;
 
-    Node* current = head.get();
+    Node* current = head;
     while (current) {
         result.push_back(current->data);
         current = current->next.get();
@@ -250,7 +249,7 @@ bool DoublyLinkedList::clearList() {
         return false;
     }
 
-    Node* current = head.get();
+    Node* current = head;
     
     while (current) {
         Node* nextNode = current->next.get();
@@ -259,7 +258,7 @@ bool DoublyLinkedList::clearList() {
         current = nextNode;
     }
 
-    head.reset();
+    head = nullptr;
     tail = nullptr;
 
     size = 0;
@@ -300,6 +299,14 @@ bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
 
     node2->next = std::move(tmpN1next);
     node2->prev = tmpN1prev;
+    
+    if (node1 == head) {
+        head = node2;
+        tail = node1;
+    } else if (node2 == head) {
+        head = node1;
+        tail = node2;
+    }
 
     return true;
 }
@@ -310,7 +317,7 @@ int DoublyLinkedList::getSize() const {
 }
 
 void DoublyLinkedList::printList() const {
-    Node* current = head.get();
+    Node* current = head;
 
     while (current) {
         std::cout << current->data;
@@ -349,16 +356,19 @@ void DoublyLinkedList::reverseList() {
     int left = 0;
     int right = size;
 
-    Node* leftNode = head.get();
+    Node* leftNode = head;
     Node* rightNode = tail;
     Node* rightNodeH = nullptr;
     Node* leftNodeH = nullptr;
 
-    while(left < size/2 && right > size/2) {
+    int half = size/2;
+
+    while(left < half && right > half) {
         leftNodeH = leftNode->next.get();
         rightNodeH = rightNode->prev;
         
         swapNodes(leftNode, rightNode);
+        printList();
 
         leftNode = leftNodeH;
         rightNode = rightNodeH;

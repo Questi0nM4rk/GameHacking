@@ -11,6 +11,8 @@ int main() {
     std::cout << std::endl;
 
     DLL.printList();
+    std::cout << std::endl;
+    DLL.printListBack();
 
     std::cout << std::endl;
     
