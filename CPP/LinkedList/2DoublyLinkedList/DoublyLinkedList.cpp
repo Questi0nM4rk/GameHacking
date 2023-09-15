@@ -5,21 +5,21 @@ Node* DoublyLinkedList::addNodeStart(const int &val) {
     uptr<Node> newNode = std::make_unique<Node>(val);
     
     if (head == nullptr) {
-        head = newNode.get();
+        head = std::move(newNode);
 
         size++;
-        return head;
+        return head.get();
 
     } else if (tail == nullptr) {
         head->next = std::move(newNode);
         tail = head->next.get();
-        tail->prev = head;
+        tail->prev = head.get();
 
         size++;
         return tail;
 
     } else {
-        newNode->prev = head;
+        newNode->prev = head.get();
         newNode->next = std::move(head->next);
         newNode->next->prev = newNode.get();
 
@@ -35,15 +35,15 @@ Node* DoublyLinkedList::addNodeEnd(const int &val) {
     uptr<Node> newNode = std::make_unique<Node>(val);
     
     if (head == nullptr) {
-        head = newNode.get();
+        head = std::move(newNode);
 
         size++;
-        return head;
+        return head.get();
 
     } else if (tail == nullptr) {
         head->next = std::move(newNode);
         tail = head->next.get();
-        tail->prev = head;
+        tail->prev = head.get();
 
         size++;
         return tail;
@@ -87,7 +87,7 @@ Node* DoublyLinkedList::getNodeByVal(const int &val) {
         return nullptr;
     }
 
-    Node* left = head;
+    Node* left = head.get();
     Node* right = tail;
 
     while (left->next.get() != right && right->prev != left && left != nullptr && right != nullptr) {
@@ -114,14 +114,14 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
         return nullptr;
     }
 
-    Node* left = head;
+    Node* left = head.get();
     Node* right = tail;
 
     int leftPos = 0;
     int rightPos = size;
 
     if (pos == 0) {
-        return head;
+        return head.get();
     }
 
     else if (pos == size-1) {
@@ -150,7 +150,7 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
 
 
 Node* DoublyLinkedList::getHead() const {
-    return head;
+    return head.get();
 }
 
 Node* DoublyLinkedList::getTail() const {
@@ -187,7 +187,7 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
     if (node->prev) {
         node->prev->next = std::move(node->next);
     } else {
-        head = node->next.get();
+        head = std::move(node->next);
     }
 
     size--;
@@ -200,7 +200,7 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
 std::vector<int> DoublyLinkedList::toArray() const {
     std::vector<int> result;
 
-    Node* current = head;
+    Node* current = head.get();
     while (current) {
         result.push_back(current->data);
         current = current->next.get();
@@ -249,7 +249,7 @@ bool DoublyLinkedList::clearList() {
         return false;
     }
 
-    Node* current = head;
+    Node* current = head.get();
     
     while (current) {
         Node* nextNode = current->next.get();
@@ -258,7 +258,7 @@ bool DoublyLinkedList::clearList() {
         current = nextNode;
     }
 
-    head = nullptr;
+    head.reset();
     tail = nullptr;
 
     size = 0;
@@ -291,20 +291,36 @@ bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
         return false;
     }
 
-    uptr<Node> tmpN1next = std::move(node1->next);
-    Node* tmpN1prev = node1->prev;
+    uptr<Node> unode1 = uptr<Node>(node1);
+    uptr<Node> unode2 = uptr<Node>(node2);
 
-    node1->next = std::move(node2->next);
-    node1->prev = node2->prev;
+    uptr<Node> tmpN1next = std::move(unode1->next);
+    Node* tmpN1prev = unode1->prev;
 
-    node2->next = std::move(tmpN1next);
-    node2->prev = tmpN1prev;
+    unode1->next = std::move(unode2->next);
+    unode1->prev = unode2->prev;
+
+    unode2->next = std::move(tmpN1next);
+    unode2->prev = tmpN1prev;
     
-    if (node1 == head) {
-        head = node2;
+    if (unode1->prev != nullptr)
+        node1->prev->next = std::move(unode1);
+
+    if (unode2->prev != nullptr)
+        node2->prev->next = std::move(unode2);
+
+    if (unode1->next != nullptr)
+        node1->next->prev = unode1.get();
+
+    if (unode2->next != nullptr)
+        node2->next->prev = unode2.get();
+
+    if (node1 == head.get()) {
+        head = std::move(unode2);
         tail = node1;
-    } else if (node2 == head) {
-        head = node1;
+
+    } else if (node2 == head.get()) {
+        head = std::move(unode1);
         tail = node2;
     }
 
@@ -317,7 +333,7 @@ int DoublyLinkedList::getSize() const {
 }
 
 void DoublyLinkedList::printList() const {
-    Node* current = head;
+    Node* current = head.get();
 
     while (current) {
         std::cout << current->data;
@@ -356,7 +372,7 @@ void DoublyLinkedList::reverseList() {
     int left = 0;
     int right = size;
 
-    Node* leftNode = head;
+    Node* leftNode = head.get();
     Node* rightNode = tail;
     Node* rightNodeH = nullptr;
     Node* leftNodeH = nullptr;
