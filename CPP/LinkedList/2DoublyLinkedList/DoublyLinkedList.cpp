@@ -207,7 +207,6 @@ std::vector<int> DoublyLinkedList::toArray() const {
     }
 
     return result;
-
 }
 
 
