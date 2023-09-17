@@ -180,7 +180,7 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
         node->next->prev = node->prev;
     } else {
         tail = node->prev;
-        tail->next = nullptr
+        tail->next = nullptr;
     }
 
     if (node->prev) {
