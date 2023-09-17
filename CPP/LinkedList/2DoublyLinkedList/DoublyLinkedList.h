@@ -17,7 +17,7 @@ using sptr = std::shared_ptr<S>;
 struct Node
 {
     int data;
-    uptr<Node> next;
+    Node* next;
     Node* prev;
 
     Node(int val) : data(val), next(nullptr), prev(nullptr) {}
@@ -26,7 +26,7 @@ struct Node
 class DoublyLinkedList
 {
 private:
-    uptr<Node> head = nullptr;
+    Node* head = nullptr;
     Node* tail = nullptr;
     int size = 0;
 

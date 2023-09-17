@@ -2,59 +2,57 @@
 
 
 Node* DoublyLinkedList::addNodeStart(const int &val) {
-    uptr<Node> newNode = std::make_unique<Node>(val);
+    Node* newNode = new Node(val);
     
     if (head == nullptr) {
-        head = std::move(newNode);
-
+        head = newNode;
+        
         size++;
-        return head.get();
+        return head;
 
     } else if (tail == nullptr) {
         head->next = std::move(newNode);
-        tail = head->next.get();
-        tail->prev = head.get();
-
+        tail = head->next;
+        tail->prev = head;
+        
         size++;
         return tail;
 
     } else {
-        newNode->prev = head.get();
-        newNode->next = std::move(head->next);
-        newNode->next->prev = newNode.get();
-
+        newNode->prev = head;
+        newNode->next = head->next;
+        newNode->next->prev = newNode;
         head->next = std::move(newNode);
-
+        
         size++;
-
-        return newNode.get();
+        return newNode;
     }
 }
 
 Node* DoublyLinkedList::addNodeEnd(const int &val) {
-    uptr<Node> newNode = std::make_unique<Node>(val);
+    Node* newNode = new Node(val);
     
     if (head == nullptr) {
-        head = std::move(newNode);
+        head = newNode;
 
         size++;
-        return head.get();
+        return head;
 
     } else if (tail == nullptr) {
-        head->next = std::move(newNode);
-        tail = head->next.get();
-        tail->prev = head.get();
+        head->next = newNode;
+        tail = head->next;
+        tail->prev = head;
 
         size++;
         return tail;
 
     } else {
         newNode->prev = tail;
-        tail->next = std::move(newNode);
-        tail = tail->next.get();
-
+        tail->next = newNode;
+        tail = tail->next;
+        
         size++;
-        return newNode.get();
+        return newNode;
     }
 }
 
@@ -64,7 +62,7 @@ Node* DoublyLinkedList::insertNode(const int &pos, const int &val) {
         return nullptr;
     }
 
-    uptr<Node> newNode = std::make_unique<Node>(val);
+    Node* newNode = new Node(val);
 
     Node* nodePos = getNodeByPos(pos);
 
@@ -72,13 +70,13 @@ Node* DoublyLinkedList::insertNode(const int &pos, const int &val) {
         return nullptr;
     }
 
-    newNode->next = std::move(nodePos->next);
+    newNode->next = nodePos->next;
     newNode->prev = nodePos;
-    nodePos->next = std::move(newNode);
+    nodePos->next = newNode;
 
     size++;
 
-    return nodePos->next.get();
+    return nodePos->next;
 }
 
 
@@ -87,10 +85,10 @@ Node* DoublyLinkedList::getNodeByVal(const int &val) {
         return nullptr;
     }
 
-    Node* left = head.get();
+    Node* left = head;
     Node* right = tail;
 
-    while (left->next.get() != right && right->prev != left && left != nullptr && right != nullptr) {
+    while (left->next != right && right->prev != left && left != nullptr && right != nullptr) {
         if (left->data == val) {
             return left;
         }
@@ -98,7 +96,7 @@ Node* DoublyLinkedList::getNodeByVal(const int &val) {
             return right;
         }
 
-        left = left->next.get();
+        left = left->next;
         right = right->prev;
     }
 
@@ -114,21 +112,21 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
         return nullptr;
     }
 
-    Node* left = head.get();
-    Node* right = tail;
-
-    int leftPos = 0;
-    int rightPos = size;
-
     if (pos == 0) {
-        return head.get();
+        return head;
     }
 
     else if (pos == size-1) {
         return tail;
     }
 
-    while (left->next.get() != right && right->prev != left && left != nullptr && right != nullptr) {
+    Node* left = head;
+    Node* right = tail;
+
+    int leftPos = 0;
+    int rightPos = size;
+
+    while (left->next != right && right->prev != left && left != nullptr && right != nullptr) {
         if (leftPos == pos) {
             return left;
         }
@@ -303,6 +301,7 @@ bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
     unode2->prev = tmpN1prev;
     
     if (unode1->prev != nullptr)
+        uptr<Node> tmp = std::move(node1->prev->next);
         node1->prev->next = std::move(unode1);  // propably this is the last thing that holds the next node, so after replacing it with the new node destroyes the second node
 
     if (unode2->prev != nullptr)
