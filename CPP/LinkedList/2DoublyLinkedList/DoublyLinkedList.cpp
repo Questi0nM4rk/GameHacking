@@ -329,7 +329,7 @@ int DoublyLinkedList::getSize() const {
 }
 
 void DoublyLinkedList::printList() const {
-    Node* current = head.get();
+    Node* current = head;
 
     while (current) {
         std::cout << current->data;
@@ -338,7 +338,7 @@ void DoublyLinkedList::printList() const {
             std::cout << " <--> ";
         }
 
-        current = current->next.get();
+        current = current->next;
     }
 
     std::cout << std::endl;
@@ -368,7 +368,7 @@ void DoublyLinkedList::reverseList() {
     int left = 0;
     int right = size;
 
-    Node* leftNode = head.get();
+    Node* leftNode = head;
     Node* rightNode = tail;
     Node* rightNodeH = nullptr;
     Node* leftNodeH = nullptr;
@@ -376,7 +376,7 @@ void DoublyLinkedList::reverseList() {
     int half = size/2;
 
     while(left < half && right > half) {
-        leftNodeH = leftNode->next.get();
+        leftNodeH = leftNode->next;
         rightNodeH = rightNode->prev;
         
         swapNodes(leftNode, rightNode);
