@@ -290,37 +290,33 @@ bool DoublyLinkedList::swapNodes(Node* node1, Node* node2) {
         return false;
     }
 
-    uptr<Node> unode1 = uptr<Node>(node1);
-    uptr<Node> unode2 = uptr<Node>(node2);
+    Node* tmpN1next = node1->next;
+    Node* tmpN1prev = node1->prev;
 
-    uptr<Node> tmpN1next = std::move(unode1->next);
-    Node* tmpN1prev = unode1->prev;
+    node1->next = node2->next;
+    node1->prev = node2->prev;
 
-    unode1->next = std::move(unode2->next);
-    unode1->prev = unode2->prev;
-
-    unode2->next = std::move(tmpN1next);
-    unode2->prev = tmpN1prev;
+    node2->next = std::move(tmpN1next);
+    node2->prev = tmpN1prev;
     
-    if (unode1->prev != nullptr)
-        uptr<Node> tmp = std::move(node1->prev->next);
-        node1->prev->next = std::move(unode1);  // propably this is the last thing that holds the next node, so after replacing it with the new node destroyes the second node
+    if (node1->prev != nullptr)
+        node1->prev->next = node1;  // propably this is the last thing that holds the next node, so after replacing it with the new node destroyes the second node
 
-    if (unode2->prev != nullptr)
-        node2->prev->next = std::move(unode2);
+    if (node2->prev != nullptr)
+        node2->prev->next = node2;
 
-    if (unode1->next != nullptr)
-        node1->next->prev = unode1.get();
+    if (node1->next != nullptr)
+        node1->next->prev = node1;
 
-    if (unode2->next != nullptr)
-        node2->next->prev = unode2.get();
+    if (node2->next != nullptr)
+        node2->next->prev = node2;
 
-    if (node1 == head.get()) {
-        head = std::move(unode2);
+    if (node1 == head) {
+        head = node2;
         tail = node1;
 
-    } else if (node2 == head.get()) {
-        head = std::move(unode1);
+    } else if (node2 == head) {
+        head = node1;
         tail = node2;
     }
 
