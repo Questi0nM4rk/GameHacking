@@ -248,16 +248,16 @@ bool DoublyLinkedList::clearList() {
         return false;
     }
 
-    Node* current = head.get();
+    Node* current = head;
     
     while (current) {
-        Node* nextNode = current->next.get();
+        Node* nextNode = current->next;
         current->prev = nullptr; 
-        current->next.reset(); 
+        current->next = nullptr; 
         current = nextNode;
     }
 
-    head.reset();
+    head = nullptr;
     tail = nullptr;
 
     size = 0;
