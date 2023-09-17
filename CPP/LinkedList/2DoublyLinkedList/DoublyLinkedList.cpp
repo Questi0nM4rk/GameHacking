@@ -148,7 +148,7 @@ Node* DoublyLinkedList::getNodeByPos(const int &pos) {
 
 
 Node* DoublyLinkedList::getHead() const {
-    return head.get();
+    return head;
 }
 
 Node* DoublyLinkedList::getTail() const {
@@ -180,12 +180,14 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
         node->next->prev = node->prev;
     } else {
         tail = node->prev;
+        tail->next = nullptr
     }
 
     if (node->prev) {
-        node->prev->next = std::move(node->next);
+        node->prev->next = node->next;
     } else {
-        head = std::move(node->next);
+        head = node->next;
+        head->prev = nullptr;
     }
 
     size--;
@@ -198,10 +200,10 @@ uptr<Node> DoublyLinkedList::popNode(Node* node) {
 std::vector<int> DoublyLinkedList::toArray() const {
     std::vector<int> result;
 
-    Node* current = head.get();
+    Node* current = head;
     while (current) {
         result.push_back(current->data);
-        current = current->next.get();
+        current = current->next;
     }
 
     return result;
